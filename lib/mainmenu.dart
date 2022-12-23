@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/login.dart';
+import 'package:pfd_flutter/register.dart';
 import 'package:sizer/sizer.dart';
 
 class MainMenu extends StatelessWidget {
@@ -88,7 +89,14 @@ class MainMenu extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       side: const BorderSide(width: 2.0, color: Colors.black),
                       shape: const StadiumBorder()),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Register(),
+                      ),
+                    );
+                  },
                   child: const Text(
                     'Register',
                     style: TextStyle(
