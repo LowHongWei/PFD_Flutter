@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/login.dart';
 import 'package:sizer/sizer.dart';
 
 class MainMenu extends StatelessWidget {
@@ -61,7 +62,14 @@ class MainMenu extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                       shape: const StadiumBorder()),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignIn(),
+                      ),
+                    );
+                  },
                   child: const Text(
                     'Log In',
                     style: TextStyle(
