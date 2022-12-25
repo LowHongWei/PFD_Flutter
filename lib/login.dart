@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/landingPage.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});
@@ -122,7 +123,15 @@ class SignIn extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
-                          onPressed: () {},
+                          onPressed: () {
+                            //To be replaced with like some firebase code or smth
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LandingPage(),
+                              ),
+                            );
+                          },
                           child: const Text(
                             'Log In',
                             style: TextStyle(
