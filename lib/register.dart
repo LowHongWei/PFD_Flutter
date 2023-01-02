@@ -40,7 +40,7 @@ class _RegisterState extends State<Register> {
                 topRight: Radius.circular(35),
               ),
             ),
-            child: Column(
+            child: ListView(
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
