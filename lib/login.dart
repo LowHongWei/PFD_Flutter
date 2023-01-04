@@ -25,7 +25,7 @@ class SignIn extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Column(
+        child: ListView(
           children: [
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 10),

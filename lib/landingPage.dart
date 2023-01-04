@@ -19,7 +19,7 @@ class LandingPage extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Column(
+        child: ListView(
           children: [
             const Padding(
               padding: EdgeInsets.all(30),
