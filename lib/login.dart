@@ -143,7 +143,7 @@ class _SignInState extends State<Login> {
                               backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
-                            signIn();
+                            Login();
                             //To be replaced with like some firebase code or smth
                             Navigator.push(
                               context,
@@ -231,7 +231,7 @@ class _SignInState extends State<Login> {
 //     super.dispose();
 //   }
 
-  Future signIn() async {
+  Future Login() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
