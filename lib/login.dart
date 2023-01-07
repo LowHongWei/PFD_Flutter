@@ -1,8 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/landingPage.dart';
 
-class SignIn extends StatelessWidget {
-  const SignIn({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
+
+  @override
+  State<Login> createState() => _SignInState();
+}
+
+class _SignInState extends State<Login> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +84,15 @@ class SignIn extends StatelessWidget {
                     const SizedBox(
                       height: 65,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 320,
                       child: TextField(
-                        style: TextStyle(
+                        controller: emailController,
+                        style: const TextStyle(
                             color: Color(0xFFF9CF00),
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: Color(0xFFF9CF00), width: 2),
@@ -85,22 +102,23 @@ class SignIn extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
-                            hintText: "Username"),
+                            hintText: "Email"),
                       ),
                     ),
                     const SizedBox(
                       height: 35,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 320,
                       child: TextField(
-                        style: TextStyle(
+                        controller: passwordController,
+                        style: const TextStyle(
                             color: Color(0xFFF9CF00),
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                         obscureText: true,
                         obscuringCharacter: "*",
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: Color(0xFFF9CF00), width: 2),
@@ -124,11 +142,12 @@ class SignIn extends StatelessWidget {
                               backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
+                            signIn();
                             //To be replaced with like some firebase code or smth
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LandingPage(),
+                                builder: (context) => const LandingPage(),
                               ),
                             );
                           },
@@ -185,6 +204,29 @@ class SignIn extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+// class Login extends StatefulWidget {
+//   const Login({super.key});
+
+//   @override
+//   State<Login> createState() => _SignIn();
+
+//   final emailController = TextEditingController();
+//   final passwordController = TextEditingController();
+
+//   @override
+//   void dispose() {
+//     emailController.dispose();
+//     passwordController.dispose();
+//     super.dispose();
+//   }
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
     );
   }
 }
