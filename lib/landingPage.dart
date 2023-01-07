@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/qrCode.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -14,8 +15,8 @@ class LandingPage extends StatelessWidget {
         title: Image.asset(
           'images/IconBlack.png',
           fit: BoxFit.cover,
-          height: 200,
-          width: 200,
+          height: MediaQuery.of(context).size.height * 0.08,
+          width: MediaQuery.of(context).size.width * 0.6,
         ),
       ),
       body: Center(
@@ -35,6 +36,7 @@ class LandingPage extends StatelessWidget {
             Expanded(
               child: Container(
                 width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.79,
                 decoration: const BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.only(
@@ -44,10 +46,11 @@ class LandingPage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 26),
-                      child: Align(
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1,
+                          vertical: MediaQuery.of(context).size.height * 0.02),
+                      child: const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Canteens',
@@ -75,8 +78,10 @@ class LandingPage extends StatelessWidget {
                                 ),
                                 child: Image.asset(
                                   'images/MKP_Button.png',
-                                  width: 300.0,
-                                  height: 100.0,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.13,
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -93,8 +98,8 @@ class LandingPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 25,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.03,
                     ),
                     SizedBox(
                       child: DecoratedBox(
@@ -112,8 +117,10 @@ class LandingPage extends StatelessWidget {
                                 ),
                                 child: Image.asset(
                                   'images/Munch_Button.png',
-                                  width: 300.0,
-                                  height: 100.0,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.13,
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -141,7 +148,14 @@ class LandingPage extends StatelessWidget {
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => QrCode(),
+                                  ),
+                                );
+                              },
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(18),
@@ -149,8 +163,10 @@ class LandingPage extends StatelessWidget {
                                 ),
                                 child: Image.asset(
                                   'images/FC_Button.png',
-                                  width: 300.0,
-                                  height: 100.0,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.13,
                                   fit: BoxFit.fill,
                                 ),
                               ),

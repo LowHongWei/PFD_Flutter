@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/landingPage.dart';
+import 'package:pfd_flutter/register.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});
@@ -28,9 +29,8 @@ class SignIn extends StatelessWidget {
         child: ListView(
           children: [
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.all(20),
               child: SizedBox(
-                width: 340,
                 child: Text(
                   textAlign: TextAlign.start,
                   "Welcome Back!",
@@ -41,6 +41,7 @@ class SignIn extends StatelessWidget {
             Expanded(
               child: Container(
                 width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.68,
                 decoration: const BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.only(
@@ -160,7 +161,14 @@ class SignIn extends StatelessWidget {
                               side: const BorderSide(
                                   width: 2.0, color: Color(0xFFF9CF00)),
                               shape: const StadiumBorder()),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Register(),
+                              ),
+                            );
+                          },
                           child: const Text(
                             'Register',
                             style: TextStyle(
