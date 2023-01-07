@@ -2,15 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/landingPage.dart';
 import 'package:pfd_flutter/register.dart';
+import 'package:pfd_flutter/main_menu.dart';
+import 'package:pfd_flutter/main_start.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
 
   @override
-  State<Login> createState() => _SignInState();
+  State<Login> createState() => _Login();
 }
 
-class _SignInState extends State<Login> {
+class _Login extends State<Login> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -143,14 +145,19 @@ class _SignInState extends State<Login> {
                               backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
-                            Login();
-                            //To be replaced with like some firebase code or smth
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LandingPage(),
-                              ),
-                            );
+                            login;
+                            FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text)
+                                .then((value) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LandingPage()));
+                            });
+                            
                           },
                           child: const Text(
                             'Log In',
@@ -215,23 +222,7 @@ class _SignInState extends State<Login> {
     );
   }
 
-// class Login extends StatefulWidget {
-//   const Login({super.key});
-
-//   @override
-//   State<Login> createState() => _SignIn();
-
-//   final emailController = TextEditingController();
-//   final passwordController = TextEditingController();
-
-//   @override
-//   void dispose() {
-//     emailController.dispose();
-//     passwordController.dispose();
-//     super.dispose();
-//   }
-
-  Future Login() async {
+  Future login() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: emailController.text.trim(),
       password: passwordController.text.trim(),

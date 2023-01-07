@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/main_menu.dart';
+import 'package:pfd_flutter/main_start.dart';
 import 'package:pfd_flutter/qrCode.dart';
 
 class LandingPage extends StatelessWidget {
@@ -70,7 +73,16 @@ class LandingPage extends StatelessWidget {
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                FirebaseAuth.instance.signOut().then((value) {
+                                  print("signOut");
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const MainStart())); //temp code
+                                });
+                              },
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(18),
@@ -152,7 +164,7 @@ class LandingPage extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => QrCode(),
+                                    builder: (context) => const QrCode(),
                                   ),
                                 );
                               },

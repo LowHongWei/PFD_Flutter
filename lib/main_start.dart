@@ -4,7 +4,7 @@ import 'package:pfd_flutter/landingPage.dart';
 import 'package:pfd_flutter/login.dart';
 import 'package:pfd_flutter/register.dart';
 import 'package:sizer/sizer.dart';
-import 'main_menu.dart';
+import 'package:pfd_flutter/main_menu.dart';
 
 class MainStart extends StatelessWidget {
   const MainStart({super.key});
@@ -15,7 +15,6 @@ class MainStart extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              FirebaseAuth.instance.signOut();
               return const LandingPage();
             } else {
               return const MainMenu();
