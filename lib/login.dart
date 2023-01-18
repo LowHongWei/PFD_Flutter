@@ -1,8 +1,27 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/landingPage.dart';
+import 'package:pfd_flutter/register.dart';
+import 'package:pfd_flutter/main_menu.dart';
+import 'package:pfd_flutter/main_start.dart';
 
-class SignIn extends StatelessWidget {
-  const SignIn({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
+
+  @override
+  State<Login> createState() => _Login();
+}
+
+class _Login extends State<Login> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +44,11 @@ class SignIn extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Column(
+        child: ListView(
           children: [
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.all(20),
               child: SizedBox(
-                width: 340,
                 child: Text(
                   textAlign: TextAlign.start,
                   "Welcome Back!",
@@ -41,6 +59,7 @@ class SignIn extends StatelessWidget {
             Expanded(
               child: Container(
                 width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.68,
                 decoration: const BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.only(
@@ -68,14 +87,15 @@ class SignIn extends StatelessWidget {
                     const SizedBox(
                       height: 65,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 320,
                       child: TextField(
-                        style: TextStyle(
+                        controller: emailController,
+                        style: const TextStyle(
                             color: Color(0xFFF9CF00),
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: Color(0xFFF9CF00), width: 2),
@@ -85,22 +105,23 @@ class SignIn extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
-                            hintText: "Username"),
+                            hintText: "Email"),
                       ),
                     ),
                     const SizedBox(
                       height: 35,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 320,
                       child: TextField(
-                        style: TextStyle(
+                        controller: passwordController,
+                        style: const TextStyle(
                             color: Color(0xFFF9CF00),
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                         obscureText: true,
                         obscuringCharacter: "*",
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: Color(0xFFF9CF00), width: 2),
@@ -124,13 +145,18 @@ class SignIn extends StatelessWidget {
                               backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
-                            //To be replaced with like some firebase code or smth
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LandingPage(),
-                              ),
-                            );
+                            login;
+                            FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text)
+                                .then((value) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LandingPage()));
+                            });
                           },
                           child: const Text(
                             'Log In',
@@ -160,7 +186,14 @@ class SignIn extends StatelessWidget {
                               side: const BorderSide(
                                   width: 2.0, color: Color(0xFFF9CF00)),
                               shape: const StadiumBorder()),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Register(),
+                              ),
+                            );
+                          },
                           child: const Text(
                             'Register',
                             style: TextStyle(
@@ -185,6 +218,13 @@ class SignIn extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Future login() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
     );
   }
 }

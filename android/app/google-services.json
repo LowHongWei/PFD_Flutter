@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "173987716341",
+    "project_id": "ngeeannsustainability",
+    "storage_bucket": "ngeeannsustainability.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173987716341:android:44a0e6cdc331627aad79bc",
+        "android_client_info": {
+          "package_name": "com.example.pfd_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "173987716341-qj1qts6u9adfafpe8sr8ot2n23haibck.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsAdZI8PLxt2lIoI187Xt-cd7-JvRIKz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "173987716341-qj1qts6u9adfafpe8sr8ot2n23haibck.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

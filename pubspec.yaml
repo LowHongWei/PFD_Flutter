@@ -38,6 +38,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
   sizer: ^2.0.15
+  #firebase_auth.
+  firebase_auth: ^4.2.4
+  #firebase_Cloud fire_store.
+  cloud_firestore: ^4.3.1
+  #QRCODE
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:

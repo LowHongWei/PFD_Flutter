@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/landingPage.dart';
 import 'package:pfd_flutter/login.dart';
 import 'package:pfd_flutter/register.dart';
 import 'package:sizer/sizer.dart';
@@ -9,6 +11,8 @@ class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+
       backgroundColor: const Color(0xFFF9CF00),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF9CF00),
@@ -20,7 +24,7 @@ class MainMenu extends StatelessWidget {
           width: 200,
         ),
       ),
-      body: Center(
+       body:Center(
         child: Column(
           children: [
             const SizedBox(
@@ -67,7 +71,7 @@ class MainMenu extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SignIn(),
+                        builder: (context) => const Login(),
                       ),
                     );
                   },
