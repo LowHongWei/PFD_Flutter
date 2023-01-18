@@ -157,7 +157,6 @@ class _Login extends State<Login> {
                                       builder: (context) =>
                                           const LandingPage()));
                             });
-                            
                           },
                           child: const Text(
                             'Log In',

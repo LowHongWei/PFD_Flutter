@@ -148,7 +148,7 @@ class _QrCodeState extends State<QrCode> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30)),
                   child: QrImage(
-                    data: "1234567890", //Dummy
+                    data: "1234567890", 
                     version: QrVersions.auto,
                     size: MediaQuery.of(context).size.width * 0.86,
                   ),
