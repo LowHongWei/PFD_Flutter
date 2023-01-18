@@ -128,7 +128,7 @@ class SignIn extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LandingPage(),
+                                builder: (context) => const LandingPage(),
                               ),
                             );
                           },

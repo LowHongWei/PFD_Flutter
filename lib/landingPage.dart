@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/profile.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -17,9 +18,23 @@ class LandingPage extends StatelessWidget {
           height: 200,
           width: 200,
         ),
+        actions: [
+          IconButton(
+            icon: Image.asset('images/user.png'),
+            iconSize: 50,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProfilePage(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
-        child: Column(
+        child: ListView(
           children: [
             const Padding(
               padding: EdgeInsets.all(30),
