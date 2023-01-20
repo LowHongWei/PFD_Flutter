@@ -75,7 +75,6 @@ class LandingPage extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 FirebaseAuth.instance.signOut().then((value) {
-                                  print("signOut");
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

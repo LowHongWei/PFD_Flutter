@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/landingPage.dart';
+import 'package:pfd_flutter/main.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -9,6 +13,25 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   String gender = 'Male';
+  final nameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final studentIdController = TextEditingController();
+  final birthdayController = TextEditingController();
+  final emailController = TextEditingController();
+  final FirebaseAuth fAuth = FirebaseAuth.instance;
+  final fStore = FirebaseFirestore.instance;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    studentIdController.dispose();
+    birthdayController.dispose();
+    emailController.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,14 +82,15 @@ class _RegisterState extends State<Register> {
                 const SizedBox(
                   height: 45,
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 320,
-                  child: TextField(
-                    style: TextStyle(
+                  child: TextFormField(
+                    controller: nameController,
+                    style: const TextStyle(
                         color: Color(0xFFF9CF00),
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
                               BorderSide(color: Color(0xFFF9CF00), width: 2),
@@ -82,16 +106,17 @@ class _RegisterState extends State<Register> {
                 const SizedBox(
                   height: 15,
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 320,
-                  child: TextField(
-                    style: TextStyle(
+                  child: TextFormField(
+                    controller: passwordController,
+                    style: const TextStyle(
                         color: Color(0xFFF9CF00),
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
                     obscureText: true,
                     obscuringCharacter: "*",
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
                               BorderSide(color: Color(0xFFF9CF00), width: 2),
@@ -107,14 +132,15 @@ class _RegisterState extends State<Register> {
                 const SizedBox(
                   height: 15,
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 320,
-                  child: TextField(
-                    style: TextStyle(
+                  child: TextFormField(
+                    controller: studentIdController,
+                    style: const TextStyle(
                         color: Color(0xFFF9CF00),
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
                               BorderSide(color: Color(0xFFF9CF00), width: 2),
@@ -199,14 +225,15 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 320,
-                  child: TextField(
-                    style: TextStyle(
+                  child: TextFormField(
+                    controller: birthdayController,
+                    style: const TextStyle(
                         color: Color(0xFFF9CF00),
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
                               BorderSide(color: Color(0xFFF9CF00), width: 2),
@@ -222,14 +249,15 @@ class _RegisterState extends State<Register> {
                 const SizedBox(
                   height: 15,
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 320,
-                  child: TextField(
-                    style: TextStyle(
+                  child: TextFormField(
+                    controller: emailController,
+                    style: const TextStyle(
                         color: Color(0xFFF9CF00),
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
                               BorderSide(color: Color(0xFFF9CF00), width: 2),
@@ -252,7 +280,16 @@ class _RegisterState extends State<Register> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFF9CF00),
                           shape: const StadiumBorder()),
-                      onPressed: () {},
+                      onPressed: () {
+                        signUp().then((value) {
+                          createUser().then((value) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LandingPage()));
+                          });
+                        });
+                      },
                       child: const Text(
                         'Register',
                         style: TextStyle(
@@ -267,5 +304,44 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  // Future signup() async {
+  //   await fAuth.createUserWithEmailAndPassword(
+  //     email: emailController.text.trim(),
+  //     password: passwordController.text.trim(),
+  //   );
+  // }
+
+  Future signUp() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+
+    navigatorKey.currentState!.popUntil((route) => false);
+  }
+
+  Future createUser() async {
+    final docUser = FirebaseFirestore.instance.collection('Users').doc('my-id');
+
+    final json = {
+      'name': nameController.text.trim(),
+      'email': emailController.text.trim(),
+      'gender': 'Male',
+      'password': passwordController.text.trim(),
+      'studentID': studentIdController.text.trim(),
+      'birthday': DateTime(2002, 1, 1),
+    };
+
+    await docUser.set(json);
   }
 }
