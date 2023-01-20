@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/landingPage.dart';
 import 'package:pfd_flutter/main.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:pfd_flutter/main_start.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -20,6 +22,7 @@ class _RegisterState extends State<Register> {
   final emailController = TextEditingController();
   final FirebaseAuth fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -55,252 +58,258 @@ class _RegisterState extends State<Register> {
       body: Center(
         child: Expanded(
           child: Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(35),
-                topRight: Radius.circular(35),
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(35),
+                  topRight: Radius.circular(35),
+                ),
               ),
-            ),
-            child: ListView(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      'Register',
-                      style: TextStyle(
-                          color: Color(0xFFF9CF00),
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.right,
+              child: Form(
+                key: formKey,
+                child: ListView(
+                  children: [
+                    const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          'Register',
+                          style: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 45,
-                ),
-                SizedBox(
-                  width: 320,
-                  child: TextFormField(
-                    controller: nameController,
-                    style: const TextStyle(
-                        color: Color(0xFFF9CF00),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                    decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF9CF00), width: 2),
-                        ),
-                        hintStyle: TextStyle(
-                          color: Color(0xFFF9CF00),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                        hintText: "Name"),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                  width: 320,
-                  child: TextFormField(
-                    controller: passwordController,
-                    style: const TextStyle(
-                        color: Color(0xFFF9CF00),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                    obscureText: true,
-                    obscuringCharacter: "*",
-                    decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF9CF00), width: 2),
-                        ),
-                        hintStyle: TextStyle(
-                          color: Color(0xFFF9CF00),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                        hintText: "Password"),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                  width: 320,
-                  child: TextFormField(
-                    controller: studentIdController,
-                    style: const TextStyle(
-                        color: Color(0xFFF9CF00),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                    decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF9CF00), width: 2),
-                        ),
-                        hintStyle: TextStyle(
-                          color: Color(0xFFF9CF00),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                        hintText: "StudentID"),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                  width: 320,
-                  child: Theme(
-                    data: ThemeData(
-                      unselectedWidgetColor: const Color(0xFFF9CF00),
+                    const SizedBox(
+                      height: 45,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          children: [
-                            const Text(
-                              "Male",
-                              style: TextStyle(
-                                  color: Color(0xFFF9CF00),
-                                  fontWeight: FontWeight.bold),
+                    SizedBox(
+                      width: 320,
+                      child: TextFormField(
+                        controller: nameController,
+                        style: const TextStyle(
+                            color: Color(0xFFF9CF00),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                        decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xFFF9CF00), width: 2),
                             ),
-                            Radio(
-                                value: "Male",
-                                groupValue: gender,
-                                onChanged: (value) => {
-                                      setState(() {
-                                        gender = "Male";
-                                      })
-                                    }),
+                            hintStyle: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                            hintText: "Name"),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: 320,
+                      child: TextFormField(
+                        controller: passwordController,
+                        style: const TextStyle(
+                            color: Color(0xFFF9CF00),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                        obscureText: true,
+                        obscuringCharacter: "*",
+                        decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xFFF9CF00), width: 2),
+                            ),
+                            hintStyle: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                            hintText: "Password"),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) => value != null && value.length < 6
+                            ? 'Enter min 6 characters'
+                            : null,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: 320,
+                      child: TextFormField(
+                        controller: studentIdController,
+                        style: const TextStyle(
+                            color: Color(0xFFF9CF00),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                        decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xFFF9CF00), width: 2),
+                            ),
+                            hintStyle: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                            hintText: "StudentID"),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: 320,
+                      child: Theme(
+                        data: ThemeData(
+                          unselectedWidgetColor: const Color(0xFFF9CF00),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Row(
+                              children: [
+                                const Text(
+                                  "Male",
+                                  style: TextStyle(
+                                      color: Color(0xFFF9CF00),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Radio(
+                                    value: "Male",
+                                    groupValue: gender,
+                                    onChanged: (value) => {
+                                          setState(() {
+                                            gender = "Male";
+                                          })
+                                        }),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Female",
+                                  style: TextStyle(
+                                    color: Color(0xFFF9CF00),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Radio(
+                                    value: "Female",
+                                    groupValue: gender,
+                                    onChanged: (value) => {
+                                          setState(() {
+                                            gender = "Female";
+                                          })
+                                        }),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Others",
+                                  style: TextStyle(
+                                    color: Color(0xFFF9CF00),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Radio(
+                                    value: "Others",
+                                    groupValue: gender,
+                                    onChanged: (value) => {
+                                          setState(() {
+                                            gender = "Others";
+                                          })
+                                        }),
+                              ],
+                            ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Female",
-                              style: TextStyle(
-                                color: Color(0xFFF9CF00),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Radio(
-                                value: "Female",
-                                groupValue: gender,
-                                onChanged: (value) => {
-                                      setState(() {
-                                        gender = "Female";
-                                      })
-                                    }),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Others",
-                              style: TextStyle(
-                                color: Color(0xFFF9CF00),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Radio(
-                                value: "Others",
-                                groupValue: gender,
-                                onChanged: (value) => {
-                                      setState(() {
-                                        gender = "Others";
-                                      })
-                                    }),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      width: 320,
+                      child: TextFormField(
+                        controller: birthdayController,
+                        style: const TextStyle(
+                            color: Color(0xFFF9CF00),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                        decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xFFF9CF00), width: 2),
+                            ),
+                            hintStyle: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                            hintText: "Birthday (dd/mm/yyyy)"),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: 320,
+                      child: TextFormField(
+                        controller: emailController,
+                        style: const TextStyle(
+                            color: Color(0xFFF9CF00),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                        decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xFFF9CF00), width: 2),
+                            ),
+                            hintStyle: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                            hintText: "Email"),
+                        validator: (email) =>
+                            email != null && !EmailValidator.validate(email)
+                                ? 'Enter a valid email'
+                                : null,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 65,
+                    ),
+                    SizedBox(
+                      width: 300,
+                      height: 40,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFF9CF00),
+                              shape: const StadiumBorder()),
+                          onPressed: () {
+                            signUp().whenComplete(() => Navigator.push(context, MaterialPageRoute(builder: (context) => const
+                             LandingPage(),)));
+                            
+                          },
+                          child: const Text(
+                            'Register',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 320,
-                  child: TextFormField(
-                    controller: birthdayController,
-                    style: const TextStyle(
-                        color: Color(0xFFF9CF00),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                    decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF9CF00), width: 2),
-                        ),
-                        hintStyle: TextStyle(
-                          color: Color(0xFFF9CF00),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                        hintText: "Birthday (dd/mm/yyyy)"),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                  width: 320,
-                  child: TextFormField(
-                    controller: emailController,
-                    style: const TextStyle(
-                        color: Color(0xFFF9CF00),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                    decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF9CF00), width: 2),
-                        ),
-                        hintStyle: TextStyle(
-                          color: Color(0xFFF9CF00),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                        hintText: "Email"),
-                  ),
-                ),
-                const SizedBox(
-                  height: 65,
-                ),
-                SizedBox(
-                  width: 300,
-                  height: 40,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFF9CF00),
-                          shape: const StadiumBorder()),
-                      onPressed: () {
-                        signUp().then((value) {
-                          createUser().then((value) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LandingPage()));
-                          });
-                        });
-                      },
-                      child: const Text(
-                        'Register',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      )),
-                ),
-              ],
-            ),
-          ),
+              )),
         ),
       ),
     );
@@ -314,6 +323,9 @@ class _RegisterState extends State<Register> {
   // }
 
   Future signUp() async {
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) return;
+
     showDialog(
       context: context,
       barrierDismissible: false,
