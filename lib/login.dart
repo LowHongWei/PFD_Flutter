@@ -152,13 +152,10 @@ class _Login extends State<Login> {
                             //         password: passwordController.text.trim());
                             // login;
                             //
-                            signIn().then((value) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LandingPage()));
-                            });
+                            signIn().whenComplete(() => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const MainStart())));
                           },
                           child: const Text(
                             'Log In',
