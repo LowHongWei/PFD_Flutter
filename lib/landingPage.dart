@@ -89,13 +89,12 @@ class LandingPage extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                FirebaseAuth.instance.signOut().then((value) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const MainStart())); //temp code
-                                });
+                                FirebaseAuth.instance.signOut().whenComplete(
+                                    () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MainStart())));
                               },
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
