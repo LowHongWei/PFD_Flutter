@@ -1,5 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/profile.dart';
+import 'package:pfd_flutter/qrCode.dart';
+
+import 'main_start.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
