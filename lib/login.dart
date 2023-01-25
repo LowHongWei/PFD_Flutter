@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/landingPage.dart';
+import 'package:pfd_flutter/main.dart';
 import 'package:pfd_flutter/register.dart';
 import 'package:pfd_flutter/main_menu.dart';
 import 'package:pfd_flutter/main_start.dart';
@@ -145,18 +146,16 @@ class _Login extends State<Login> {
                               backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
-                            login;
-                            FirebaseAuth.instance
-                                .signInWithEmailAndPassword(
-                                    email: emailController.text,
-                                    password: passwordController.text)
-                                .then((value) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LandingPage()));
-                            });
+                            // FirebaseAuth.instance
+                            //     .createUserWithEmailAndPassword(
+                            //         email: emailController.text.trim(),
+                            //         password: passwordController.text.trim());
+                            // login;
+                            //
+                            signIn().whenComplete(() => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const MainStart())));
                           },
                           child: const Text(
                             'Log In',
@@ -221,10 +220,20 @@ class _Login extends State<Login> {
     );
   }
 
-  Future login() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
+  Future signIn() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+
+    navigatorKey.currentState!.popUntil((route) => false);
   }
 }

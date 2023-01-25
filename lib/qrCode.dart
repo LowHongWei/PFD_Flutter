@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/scanQrCode.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCode extends StatefulWidget {
@@ -96,6 +97,10 @@ class _QrCodeState extends State<QrCode> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: ElevatedButton(
                         onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ScanQR()));
                           setState(() {
                             QrCode.redeemVoucher = false;
                           });
@@ -148,7 +153,7 @@ class _QrCodeState extends State<QrCode> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30)),
                   child: QrImage(
-                    data: "1234567890", 
+                    data: "1234567890",
                     version: QrVersions.auto,
                     size: MediaQuery.of(context).size.width * 0.86,
                   ),
