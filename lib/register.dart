@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class _RegisterState extends State<Register> {
   final studentIdController = TextEditingController();
   final birthdayController = TextEditingController();
   final emailController = TextEditingController();
-  final FirebaseAuth fAuth = FirebaseAuth.instance;
+  final fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
   final formKey = GlobalKey<FormState>();
 
@@ -107,6 +109,10 @@ class _RegisterState extends State<Register> {
                               fontSize: 20,
                             ),
                             hintText: "Name"),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) => value != null && value.length < 2
+                            ? 'Enter min 2 characters'
+                            : null,
                       ),
                     ),
                     const SizedBox(
@@ -161,6 +167,10 @@ class _RegisterState extends State<Register> {
                               fontSize: 20,
                             ),
                             hintText: "StudentID"),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) => value != null && value.length < 10
+                            ? 'Invalid student id'
+                            : null,
                       ),
                     ),
                     const SizedBox(
@@ -254,6 +264,10 @@ class _RegisterState extends State<Register> {
                               fontSize: 20,
                             ),
                             hintText: "Birthday (dd/mm/yyyy)"),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) => value != null && value.length < 10
+                            ? 'Invalid birthday'
+                            : null,
                       ),
                     ),
                     const SizedBox(
@@ -295,9 +309,12 @@ class _RegisterState extends State<Register> {
                               backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
-                            signUp().whenComplete(() => Navigator.push(context, MaterialPageRoute(builder: (context) => const
-                             LandingPage(),)));
-                            
+                            signUp().then((value) => createUser().then(
+                                (value) => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const MainStart()))));
                           },
                           child: const Text(
                             'Register',
@@ -343,17 +360,19 @@ class _RegisterState extends State<Register> {
   }
 
   Future createUser() async {
-    final docUser = FirebaseFirestore.instance.collection('Users').doc('my-id');
+    String uid = fAuth.currentUser!.uid;
+    final docUser = FirebaseFirestore.instance.collection('Users').doc(uid);
 
     final json = {
       'name': nameController.text.trim(),
       'email': emailController.text.trim(),
-      'gender': 'Male',
-      'password': passwordController.text.trim(),
+      'gender': gender,
       'studentID': studentIdController.text.trim(),
-      'birthday': DateTime(2002, 1, 1),
+      'birthday': birthdayController.text.trim(),
     };
 
-    await docUser.set(json);
+    docUser.set(json);
   }
+
+
 }
