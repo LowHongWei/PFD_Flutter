@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pfd_flutter/currentOrder.dart';
-import 'package:pfd_flutter/profile.dart';
+import 'package:pfd_flutter/main_menu.dart';
+import 'package:pfd_flutter/main_start.dart';
 import 'package:pfd_flutter/qrCode.dart';
 
-import 'main_start.dart';
-
-class LandingPage extends StatelessWidget {
-  const LandingPage({super.key});
+class VendorLandingPage extends StatelessWidget {
+  const VendorLandingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,23 +18,9 @@ class LandingPage extends StatelessWidget {
         title: Image.asset(
           'images/IconBlack.png',
           fit: BoxFit.cover,
-          height: MediaQuery.of(context).size.height * 0.08,
-          width: MediaQuery.of(context).size.width * 0.6,
+          height: MediaQuery.of(context).size.height * 0.12,
+          width: MediaQuery.of(context).size.width * 0.8,
         ),
-        actions: [
-          IconButton(
-            icon: Image.asset('images/user.png'),
-            iconSize: 50,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ProfilePage(),
-                ),
-              );
-            },
-          ),
-        ],
       ),
       body: Center(
         child: ListView(
@@ -47,8 +31,8 @@ class LandingPage extends StatelessWidget {
                 width: 340,
                 child: Text(
                   textAlign: TextAlign.start,
-                  "Welcome, John Doe!",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  "Welcome, Food Club!",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -72,16 +56,21 @@ class LandingPage extends StatelessWidget {
                       child: const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'Canteens',
+                          'You have 200 points',
                           style: TextStyle(
                               color: Color(0xFFF9CF00),
-                              fontSize: 45,
+                              fontSize: 40,
                               fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.right,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                     SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.03,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.15,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             color: const Color(0xFFF9CF00),
@@ -89,37 +78,25 @@ class LandingPage extends StatelessWidget {
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () {
-                                FirebaseAuth.instance.signOut().whenComplete(
-                                    () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const MainStart())));
-                              },
+                              onTap: () {},
+                              // ignore: prefer_const_constructors
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(18),
                                   topRight: Radius.circular(18),
                                 ),
-                                child: Image.asset(
-                                  'images/MKP_Button.png',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.13,
-                                  fit: BoxFit.fill,
+                                // ignore: prefer_const_constructors
+                                child: Padding(
+                                  padding: const EdgeInsets.all(40.0),
+                                  child: const Text(
+                                    'Scan QR Code',
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Makan Place',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                            )
                           ],
                         ),
                       ),
@@ -128,6 +105,8 @@ class LandingPage extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.03,
                     ),
                     SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.15,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             color: const Color(0xFFF9CF00),
@@ -135,45 +114,35 @@ class LandingPage extends StatelessWidget {
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CurrentOrder(),
-                                  ),
-                                );
-                              },
+                              onTap: () {},
+                              // ignore: prefer_const_constructors
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(18),
                                   topRight: Radius.circular(18),
                                 ),
-                                child: Image.asset(
-                                  'images/Munch_Button.png',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.13,
-                                  fit: BoxFit.fill,
+                                // ignore: prefer_const_constructors
+                                child: Padding(
+                                  padding: const EdgeInsets.all(40.0),
+                                  child: const Text(
+                                    'Claim all points',
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Munch',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                            )
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 25,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.03,
                     ),
                     SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.15,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             color: const Color(0xFFF9CF00),
@@ -181,37 +150,25 @@ class LandingPage extends StatelessWidget {
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const QrCode(),
-                                  ),
-                                );
-                              },
+                              onTap: () {},
+                              // ignore: prefer_const_constructors
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(18),
                                   topRight: Radius.circular(18),
                                 ),
-                                child: Image.asset(
-                                  'images/FC_Button.png',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.13,
-                                  fit: BoxFit.fill,
+                                // ignore: prefer_const_constructors
+                                child: Padding(
+                                  padding: const EdgeInsets.all(40.0),
+                                  child: const Text(
+                                    'Current orders',
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Food Club',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                            )
                           ],
                         ),
                       ),
