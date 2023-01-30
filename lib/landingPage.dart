@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:pfd_flutter/currentOrder.dart';
 import 'package:pfd_flutter/profile.dart';
 import 'package:pfd_flutter/qrCode.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'main_start.dart';
 
 class LandingPage extends StatelessWidget {
@@ -90,8 +91,8 @@ class LandingPage extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                FirebaseAuth.instance.signOut().whenComplete(
-                                    () => Navigator.push(
+                                FirebaseAuth.instance.signOut().then((value) =>
+                                    Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>

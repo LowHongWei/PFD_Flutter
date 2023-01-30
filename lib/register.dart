@@ -332,12 +332,7 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  // Future signup() async {
-  //   await fAuth.createUserWithEmailAndPassword(
-  //     email: emailController.text.trim(),
-  //     password: passwordController.text.trim(),
-  //   );
-  // }
+
 
   Future signUp() async {
     final isValid = formKey.currentState!.validate();
@@ -361,7 +356,7 @@ class _RegisterState extends State<Register> {
 
   Future createUser() async {
     String uid = fAuth.currentUser!.uid;
-    final docUser = FirebaseFirestore.instance.collection('Users').doc(uid);
+    final docUser = fStore.collection('Users').doc(uid);
 
     final json = {
       'name': nameController.text.trim(),
@@ -373,6 +368,4 @@ class _RegisterState extends State<Register> {
 
     docUser.set(json);
   }
-
-
 }
