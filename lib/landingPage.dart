@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+
+// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/currentOrder.dart';
 import 'package:pfd_flutter/profile.dart';
@@ -6,9 +8,33 @@ import 'package:pfd_flutter/qrCode.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'main_start.dart';
+import 'package:pfd_flutter/register.dart';
+import 'package:pfd_flutter/appUser.dart';
+import 'package:pfd_flutter/appVendor.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
+
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  final FirebaseAuth fAuth = FirebaseAuth.instance;
+  final fStore = FirebaseFirestore.instance;
+  String name = 'hi';
+  String gender = '';
+  String? uid;
+
+  User? fUser;
+
+  @override
+  void initState() {
+    // fetchUserData();
+    uid = fAuth.currentUser!.uid;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +68,29 @@ class LandingPage extends StatelessWidget {
       body: Center(
         child: ListView(
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(30),
               child: SizedBox(
                 width: 340,
-                child: Text(
-                  textAlign: TextAlign.start,
-                  "Welcome, John Doe!",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(uid)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        name = snapshot.data!.get('name');
+                        return Text(
+                          name,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        );
+                      } else {
+                        return const Text("no data");
+                      }
+                    }),
+            
               ),
             ),
             Expanded(
@@ -226,4 +266,34 @@ class LandingPage extends StatelessWidget {
       ),
     );
   }
+
+  fetchUserData() async {
+    fUser = fAuth.currentUser!;
+    // final firebaseUser = fStore.collection('Users').doc(fUser!.uid);
+    final CollectionReference reference = fStore.collection('Users');
+
+    // DocumentSnapshot documentSnapshot = reference.doc(fUser!.uid).get().then((val);
+    // DocumentReference doc = fStore.doc(fUser!.uid);
+    // Future<DocumentSnapshot> name =
+    //     doc.get().then((value) => value.get('name'));
+    // print(name);
+    // DocumentSnapshot documentSnapshot = doc.snapshots();
+
+    fStore.collection('Users').doc(fUser!.uid).get().then((doc) {
+      final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      name = data['name'];
+      print(name);
+    });
+  }
 }
+
+
+//   Future fetchUserData() async {
+//     User fUser = fAuth.currentUser!;
+//     AppUser user;
+
+//     fStore.collection('Users').doc(fUser.uid).get().then((value) {
+//       name = value.get('name');
+//     });
+//   }
+// }
