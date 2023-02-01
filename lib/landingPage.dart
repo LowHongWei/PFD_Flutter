@@ -8,6 +8,8 @@ import 'package:pfd_flutter/profile.dart';
 import 'package:pfd_flutter/qrCode.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pfd_flutter/redemption.dart';
+import 'package:pfd_flutter/vendorlandingPage.dart';
 import 'main_start.dart';
 import 'package:pfd_flutter/register.dart';
 import 'package:pfd_flutter/appUser.dart';
@@ -52,6 +54,17 @@ class _LandingPageState extends State<LandingPage> {
           width: MediaQuery.of(context).size.width * 0.6,
         ),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QrCode(),
+                ),
+              );
+            },
+            icon: Image.asset('images/qr-code black.png'),
+          ),
           IconButton(
             icon: Image.asset('images/user.png'),
             iconSize: 50,
@@ -183,7 +196,7 @@ class _LandingPageState extends State<LandingPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => GivePoints(),
+                                    builder: (context) => VendorLandingPage(),
                                   ),
                                 );
                               },
