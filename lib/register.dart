@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pfd_flutter/landingPage.dart';
+import 'package:pfd_flutter/canteenPage.dart';
 import 'package:pfd_flutter/main.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:pfd_flutter/main_start.dart';

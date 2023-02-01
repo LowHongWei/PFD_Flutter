@@ -1,41 +1,17 @@
-// import 'dart:html';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pfd_flutter/currentOrder.dart';
-import 'package:pfd_flutter/givePoints.dart';
+import 'package:pfd_flutter/canteenPage.dart';
+import 'package:pfd_flutter/main_menu.dart';
+import 'package:pfd_flutter/main_start.dart';
 import 'package:pfd_flutter/profile.dart';
 import 'package:pfd_flutter/qrCode.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pfd_flutter/redemption.dart';
-import 'package:pfd_flutter/vendorlandingPage.dart';
-import 'main_start.dart';
-import 'package:pfd_flutter/register.dart';
-import 'package:pfd_flutter/appUser.dart';
-import 'package:pfd_flutter/appVendor.dart';
 
-class LandingPage extends StatefulWidget {
+import 'currentOrder.dart';
+import 'scanQrCode.dart';
+
+class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
-
-  @override
-  State<LandingPage> createState() => _LandingPageState();
-}
-
-class _LandingPageState extends State<LandingPage> {
-  final FirebaseAuth fAuth = FirebaseAuth.instance;
-  final fStore = FirebaseFirestore.instance;
-  String name = '';
-  String gender = '';
-  String? uid;
-
-  User? fUser;
-
-  @override
-  void initState() {
-    // fetchUserData();
-    uid = fAuth.currentUser!.uid;
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +19,7 @@ class _LandingPageState extends State<LandingPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF9CF00),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFFF9CF00),
         elevation: 0,
         title: Image.asset(
@@ -57,7 +34,7 @@ class _LandingPageState extends State<LandingPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => QrCode(),
+                  builder: (context) => const QrCode(),
                 ),
               );
             },
@@ -82,28 +59,29 @@ class _LandingPageState extends State<LandingPage> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(
-                vertical: MediaQuery.of(context).size.height * 0.04,
-                horizontal: MediaQuery.of(context).size.width * 0.08,
-              ),
+                  horizontal: MediaQuery.of(context).size.width * 0.1,
+                  vertical: MediaQuery.of(context).size.height * 0.02),
               child: SizedBox(
-                width: 340,
-                child: StreamBuilder(
-                    stream: fStore.collection('Users').doc(uid).snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        // AppUser appUser = new Appuser{}
-                        name = snapshot.data!.get('name');
-                        return Text(
-                          name,
+                  width: MediaQuery.of(context).size.width * 1,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      children: const [
+                        Text(
                           textAlign: TextAlign.start,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        );
-                      } else {
-                        return const Text("no data");
-                      }
-                    }),
-              ),
+                          "Welcome,",
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          textAlign: TextAlign.start,
+                          "John Doe!", //Need to do backend
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  )),
             ),
             Expanded(
               child: Container(
@@ -125,16 +103,21 @@ class _LandingPageState extends State<LandingPage> {
                       child: const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'Canteens',
+                          'You have 200 points', //Need to do backend
                           style: TextStyle(
                               color: Color(0xFFF9CF00),
-                              fontSize: 45,
+                              fontSize: 40,
                               fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.right,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                     SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.03,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.15,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             color: const Color(0xFFF9CF00),
@@ -143,36 +126,32 @@ class _LandingPageState extends State<LandingPage> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                FirebaseAuth.instance.signOut().then((value) =>
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const MainStart())));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Redemption()),
+                                );
                               },
+                              // ignore: prefer_const_constructors
                               child: ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(18),
-                                  topRight: Radius.circular(18),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(35),
                                 ),
-                                child: Image.asset(
-                                  'images/MKP_Button.png',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.13,
-                                  fit: BoxFit.fill,
+                                // ignore: prefer_const_constructors
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              0.05),
+                                  child: const Text(
+                                    'Redeem Voucher',
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Makan Place',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                            )
                           ],
                         ),
                       ),
@@ -181,6 +160,8 @@ class _LandingPageState extends State<LandingPage> {
                       height: MediaQuery.of(context).size.height * 0.03,
                     ),
                     SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.15,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             color: const Color(0xFFF9CF00),
@@ -192,79 +173,31 @@ class _LandingPageState extends State<LandingPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => VendorLandingPage(),
+                                    builder: (context) => const CanteenPage(),
                                   ),
                                 );
                               },
+                              // ignore: prefer_const_constructors
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(18),
                                   topRight: Radius.circular(18),
                                 ),
-                                child: Image.asset(
-                                  'images/Munch_Button.png',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.13,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Munch',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    SizedBox(
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            color: const Color(0xFFF9CF00),
-                            borderRadius: BorderRadius.circular(18)),
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const QrCode(),
+                                // ignore: prefer_const_constructors
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              0.05),
+                                  child: const Text(
+                                    'Order Food',
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                );
-                              },
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(18),
-                                  topRight: Radius.circular(18),
-                                ),
-                                child: Image.asset(
-                                  'images/FC_Button.png',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.13,
-                                  fit: BoxFit.fill,
                                 ),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Food Club',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                            )
                           ],
                         ),
                       ),
@@ -278,34 +211,4 @@ class _LandingPageState extends State<LandingPage> {
       ),
     );
   }
-
-  fetchUserData() async {
-    fUser = fAuth.currentUser!;
-    // final firebaseUser = fStore.collection('Users').doc(fUser!.uid);
-    final CollectionReference reference = fStore.collection('Users');
-
-    // DocumentSnapshot documentSnapshot = reference.doc(fUser!.uid).get().then((val);
-    // DocumentReference doc = fStore.doc(fUser!.uid);
-    // Future<DocumentSnapshot> name =
-    //     doc.get().then((value) => value.get('name'));
-    // print(name);
-    // DocumentSnapshot documentSnapshot = doc.snapshots();
-
-    fStore.collection('Users').doc(fUser!.uid).get().then((doc) {
-      final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      name = data['name'];
-      print(name);
-    });
-  }
 }
-
-
-//   Future fetchUserData() async {
-//     User fUser = fAuth.currentUser!;
-//     AppUser user;
-
-//     fStore.collection('Users').doc(fUser.uid).get().then((value) {
-//       name = value.get('name');
-//     });
-//   }
-// }

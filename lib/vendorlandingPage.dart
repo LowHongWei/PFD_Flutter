@@ -126,7 +126,9 @@ class VendorLandingPage extends StatelessWidget {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const ScanQR()),);
+                                  MaterialPageRoute(
+                                      builder: (context) => const ScanQR()),
+                                );
                               },
                               // ignore: prefer_const_constructors
                               child: ClipRRect(
@@ -165,11 +167,7 @@ class VendorLandingPage extends StatelessWidget {
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => ()),);
-                              },
+                              onTap: () {},
                               // ignore: prefer_const_constructors
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
@@ -211,7 +209,10 @@ class VendorLandingPage extends StatelessWidget {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const CurrentOrder()),);
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const CurrentOrder()),
+                                );
                               },
                               // ignore: prefer_const_constructors
                               child: ClipRRect(

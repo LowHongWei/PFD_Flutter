@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pfd_flutter/landingPage.dart';
+import 'package:pfd_flutter/canteenPage.dart';
 import 'package:pfd_flutter/main.dart';
 import 'package:pfd_flutter/register.dart';
 import 'package:pfd_flutter/main_menu.dart';

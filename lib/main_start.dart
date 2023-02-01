@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pfd_flutter/landingPage.dart';
+import 'package:pfd_flutter/canteenPage.dart';
 import 'package:pfd_flutter/login.dart';
 import 'package:pfd_flutter/register.dart';
 import 'package:sizer/sizer.dart';
 import 'package:pfd_flutter/main_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'landingPage.dart';
 
 class MainStart extends StatelessWidget {
   const MainStart({super.key});
