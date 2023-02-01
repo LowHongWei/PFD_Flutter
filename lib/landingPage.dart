@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
 // import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/currentOrder.dart';
@@ -25,7 +23,7 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   final FirebaseAuth fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
-  String name = 'hi';
+  String name = '';
   String gender = '';
   String? uid;
 
@@ -90,12 +88,10 @@ class _LandingPageState extends State<LandingPage> {
               child: SizedBox(
                 width: 340,
                 child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('Users')
-                        .doc(uid)
-                        .snapshots(),
+                    stream: fStore.collection('Users').doc(uid).snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        // AppUser appUser = new Appuser{}
                         name = snapshot.data!.get('name');
                         return Text(
                           name,
