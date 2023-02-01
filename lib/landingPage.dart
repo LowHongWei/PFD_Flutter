@@ -14,6 +14,25 @@ class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
 
   @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  final FirebaseAuth fAuth = FirebaseAuth.instance;
+  final fStore = FirebaseFirestore.instance;
+  String name = '';
+  String? uid;
+  User? fUser;
+
+  @override
+  void initState() {
+    // fAuth.signOut();
+    uid = fAuth.currentUser!.uid;
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
