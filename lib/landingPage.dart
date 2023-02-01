@@ -1,6 +1,7 @@
 // import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/currentOrder.dart';
+import 'package:pfd_flutter/givePoints.dart';
 import 'package:pfd_flutter/profile.dart';
 import 'package:pfd_flutter/qrCode.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -67,7 +68,10 @@ class _LandingPageState extends State<LandingPage> {
         child: ListView(
           children: [
             Padding(
-              padding: EdgeInsets.all(30),
+              padding: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height * 0.04,
+                horizontal: MediaQuery.of(context).size.width * 0.08,
+              ),
               child: SizedBox(
                 width: 340,
                 child: StreamBuilder(
@@ -175,7 +179,7 @@ class _LandingPageState extends State<LandingPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => CurrentOrder(),
+                                    builder: (context) => GivePoints(),
                                   ),
                                 );
                               },
