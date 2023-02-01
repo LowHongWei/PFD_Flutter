@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pfd_flutter/landingPage.dart';
+import 'package:pfd_flutter/canteenPage.dart';
 import 'package:pfd_flutter/main.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:pfd_flutter/main_start.dart';
@@ -364,6 +364,7 @@ class _RegisterState extends State<Register> {
       'gender': gender,
       'studentID': studentIdController.text.trim(),
       'birthday': birthdayController.text.trim(),
+      'type': 'student'
     };
 
     docUser.set(json);
