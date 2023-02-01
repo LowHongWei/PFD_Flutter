@@ -192,7 +192,7 @@ class _LandingPageState extends State<LandingPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => VendorLandingPage(),
+                                    builder: (context) => Redemption(),
                                   ),
                                 );
                               },
