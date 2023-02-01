@@ -1,4 +1,4 @@
-import 'dart:html';
+// import 'dart:html';
 
 class AppVendor {
   String? stallName;
