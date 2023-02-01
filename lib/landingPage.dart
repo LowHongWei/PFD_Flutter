@@ -70,7 +70,10 @@ class _LandingPageState extends State<LandingPage> {
         child: ListView(
           children: [
             Padding(
-              padding: EdgeInsets.all(30),
+              padding: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height * 0.04,
+                horizontal: MediaQuery.of(context).size.width * 0.08,
+              ),
               child: SizedBox(
                 width: 340,
                 child: StreamBuilder(
@@ -91,7 +94,6 @@ class _LandingPageState extends State<LandingPage> {
                         return const Text("no data");
                       }
                     }),
-            
               ),
             ),
             Expanded(
