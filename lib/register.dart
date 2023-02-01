@@ -364,6 +364,7 @@ class _RegisterState extends State<Register> {
       'gender': gender,
       'studentID': studentIdController.text.trim(),
       'birthday': birthdayController.text.trim(),
+      'type': 'student'
     };
 
     docUser.set(json);

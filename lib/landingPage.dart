@@ -24,14 +24,12 @@ class _LandingPageState extends State<LandingPage> {
   final FirebaseAuth fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
   String name = '';
-  String gender = '';
   String? uid;
-
   User? fUser;
 
   @override
   void initState() {
-    // fetchUserData();
+    // fAuth.signOut();
     uid = fAuth.currentUser!.uid;
 
     super.initState();
