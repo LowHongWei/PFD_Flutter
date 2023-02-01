@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/currentOrder.dart';
+import 'package:pfd_flutter/givePoints.dart';
 import 'package:pfd_flutter/profile.dart';
 import 'package:pfd_flutter/qrCode.dart';
 
@@ -139,7 +140,7 @@ class LandingPage extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => CurrentOrder(),
+                                    builder: (context) => GivePoints(),
                                   ),
                                 );
                               },
