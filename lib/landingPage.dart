@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
 // import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/currentOrder.dart';
@@ -8,6 +6,8 @@ import 'package:pfd_flutter/profile.dart';
 import 'package:pfd_flutter/qrCode.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pfd_flutter/redemption.dart';
+import 'package:pfd_flutter/vendorlandingPage.dart';
 import 'main_start.dart';
 import 'package:pfd_flutter/register.dart';
 import 'package:pfd_flutter/appUser.dart';
@@ -23,7 +23,7 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   final FirebaseAuth fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
-  String name = 'hi';
+  String name = '';
   String gender = '';
   String? uid;
 
@@ -53,6 +53,17 @@ class _LandingPageState extends State<LandingPage> {
         ),
         actions: [
           IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QrCode(),
+                ),
+              );
+            },
+            icon: Image.asset('images/qr-code black.png'),
+          ),
+          IconButton(
             icon: Image.asset('images/user.png'),
             iconSize: 50,
             onPressed: () {
@@ -77,12 +88,10 @@ class _LandingPageState extends State<LandingPage> {
               child: SizedBox(
                 width: 340,
                 child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('Users')
-                        .doc(uid)
-                        .snapshots(),
+                    stream: fStore.collection('Users').doc(uid).snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        // AppUser appUser = new Appuser{}
                         name = snapshot.data!.get('name');
                         return Text(
                           name,
@@ -183,7 +192,7 @@ class _LandingPageState extends State<LandingPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => GivePoints(),
+                                    builder: (context) => VendorLandingPage(),
                                   ),
                                 );
                               },
