@@ -1,7 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final FirebaseAuth fAuth = FirebaseAuth.instance;
+  final fStore = FirebaseFirestore.instance;
+  String name = '';
+  String? uid;
+
+  User? fUser;
+
+  @override
+  void initState() {
+    uid = fAuth.currentUser!.uid;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +45,26 @@ class ProfilePage extends StatelessWidget {
       body: Center(
         child: ListView(
           children: [
-            const Padding(
+             Padding(
               padding: EdgeInsets.all(30),
               child: SizedBox(
                 width: 340,
-                child: Text(
-                  textAlign: TextAlign.start,
-                  "Welcome, John Doe!",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
+                child: StreamBuilder(
+                    stream: fStore.collection('Users').doc(uid).snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        // AppUser appUser = new Appuser{}
+                        name = snapshot.data!.get('name');
+                        return Text(
+                          name,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        );
+                      } else {
+                        return const Text("no data");
+                      }
+                    }),
               ),
             ),
             Expanded(
@@ -49,7 +81,7 @@ class ProfilePage extends StatelessWidget {
                   children: const [
                     Padding(
                       padding:
-                      EdgeInsets.symmetric(horizontal: 40, vertical: 26),
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 26),
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
@@ -72,3 +104,76 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
+// class ProfilePage extends StatelessWidget {
+//   const ProfilePage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: const Color(0xFFF9CF00),
+//       appBar: AppBar(
+//         backgroundColor: const Color(0xFFF9CF00),
+//         elevation: 0,
+//         leading: GestureDetector(
+//           onTap: () {
+//             Feedback.forTap(context);
+//             Navigator.pop(context);
+//           },
+//           child: Image.asset(
+//             'images/BackArrowBlack.png',
+//             fit: BoxFit.scaleDown,
+//           ),
+//         ),
+//       ),
+//       body: Center(
+//         child: ListView(
+//           children: [
+//             const Padding(
+//               padding: EdgeInsets.all(30),
+//               child: SizedBox(
+//                 width: 340,
+//                 child: Text(
+//                   textAlign: TextAlign.start,
+//                   "Welcome, John Doe!",
+//                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+//                 ),
+//               ),
+//             ),
+//             Expanded(
+//               child: Container(
+//                 width: double.infinity,
+//                 decoration: const BoxDecoration(
+//                   color: Colors.black,
+//                   borderRadius: BorderRadius.only(
+//                     topLeft: Radius.circular(35),
+//                     topRight: Radius.circular(35),
+//                   ),
+//                 ),
+//                 child: Column(
+//                   children: const [
+//                     Padding(
+//                       padding:
+//                           EdgeInsets.symmetric(horizontal: 40, vertical: 26),
+//                       child: Align(
+//                         alignment: Alignment.topLeft,
+//                         child: Text(
+//                           'Profile',
+//                           style: TextStyle(
+//                               color: Color(0xFFF9CF00),
+//                               fontSize: 35,
+//                               fontWeight: FontWeight.bold),
+//                           textAlign: TextAlign.right,
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
