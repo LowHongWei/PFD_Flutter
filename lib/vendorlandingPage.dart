@@ -4,6 +4,9 @@ import 'package:pfd_flutter/main_menu.dart';
 import 'package:pfd_flutter/main_start.dart';
 import 'package:pfd_flutter/qrCode.dart';
 
+import 'currentOrder.dart';
+import 'scanQrCode.dart';
+
 class VendorLandingPage extends StatelessWidget {
   const VendorLandingPage({super.key});
 
@@ -78,7 +81,11 @@ class VendorLandingPage extends StatelessWidget {
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const ScanQR()),);
+                              },
                               // ignore: prefer_const_constructors
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
@@ -114,7 +121,11 @@ class VendorLandingPage extends StatelessWidget {
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => ()),);
+                              },
                               // ignore: prefer_const_constructors
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
@@ -150,7 +161,11 @@ class VendorLandingPage extends StatelessWidget {
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const CurrentOrder()),);
+                              },
                               // ignore: prefer_const_constructors
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
