@@ -102,12 +102,6 @@ class _LandingPageState extends State<CanteenPage> {
               ),
               child: const SizedBox(
                 width: 340,
-                child: Text(
-                  "Welcome, $name",
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
-                ),
               ),
             ),
             Expanded(
