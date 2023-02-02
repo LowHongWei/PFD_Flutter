@@ -1,16 +1,20 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/canteenPage.dart';
-import 'package:pfd_flutter/main_menu.dart';
-import 'package:pfd_flutter/main_start.dart';
+import 'package:pfd_flutter/currentOrder.dart';
+import 'package:pfd_flutter/foodClubVendors.dart';
+import 'package:pfd_flutter/givePoints.dart';
 import 'package:pfd_flutter/profile.dart';
 import 'package:pfd_flutter/qrCode.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pfd_flutter/redemption.dart';
+import 'package:pfd_flutter/vendorLandingPage.dart';
+import 'main_start.dart';
+import 'package:pfd_flutter/register.dart';
+import 'package:pfd_flutter/appUser.dart';
+import 'package:pfd_flutter/appVendor.dart';
 
-import 'currentOrder.dart';
-import 'scanQrCode.dart';
-
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
 
   @override
@@ -21,12 +25,14 @@ class _LandingPageState extends State<LandingPage> {
   final FirebaseAuth fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
   String name = '';
+  String gender = '';
   String? uid;
+
   User? fUser;
 
   @override
   void initState() {
-    // fAuth.signOut();
+    // fetchUserData();
     uid = fAuth.currentUser!.uid;
 
     super.initState();
@@ -38,7 +44,6 @@ class _LandingPageState extends State<LandingPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF9CF00),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFFF9CF00),
         elevation: 0,
         title: Image.asset(
@@ -53,7 +58,7 @@ class _LandingPageState extends State<LandingPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const QrCode(),
+                  builder: (context) => QrCode(),
                 ),
               );
             },
@@ -78,29 +83,28 @@ class _LandingPageState extends State<LandingPage> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.1,
-                  vertical: MediaQuery.of(context).size.height * 0.02),
+                vertical: MediaQuery.of(context).size.height * 0.04,
+                horizontal: MediaQuery.of(context).size.width * 0.08,
+              ),
               child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 1,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      children: const [
-                        Text(
+                width: 340,
+                child: StreamBuilder(
+                    stream: fStore.collection('Users').doc(uid).snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        // AppUser appUser = new Appuser{}
+                        name = snapshot.data!.get('name');
+                        return Text(
+                          "Welcome, " + name,
                           textAlign: TextAlign.start,
-                          "Welcome,",
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          textAlign: TextAlign.start,
-                          "John Doe!", //Need to do backend
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  )),
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        );
+                      } else {
+                        return const Text("no data");
+                      }
+                    }),
+              ),
             ),
             Expanded(
               child: Container(
@@ -148,7 +152,7 @@ class _LandingPageState extends State<LandingPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => VendorLandingPage(),
+                                    builder: (context) => Redemption(),
                                   ),
                                 );
                               },
@@ -230,5 +234,24 @@ class _LandingPageState extends State<LandingPage> {
         ),
       ),
     );
+  }
+
+  fetchUserData() async {
+    fUser = fAuth.currentUser!;
+    // final firebaseUser = fStore.collection('Users').doc(fUser!.uid);
+    final CollectionReference reference = fStore.collection('Users');
+
+    // DocumentSnapshot documentSnapshot = reference.doc(fUser!.uid).get().then((val);
+    // DocumentReference doc = fStore.doc(fUser!.uid);
+    // Future<DocumentSnapshot> name =
+    //     doc.get().then((value) => value.get('name'));
+    // print(name);
+    // DocumentSnapshot documentSnapshot = doc.snapshots();
+
+    fStore.collection('Users').doc(fUser!.uid).get().then((doc) {
+      final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      name = data['name'];
+      print(name);
+    });
   }
 }
