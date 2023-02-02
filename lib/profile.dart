@@ -15,12 +15,32 @@ class _ProfilePageState extends State<ProfilePage> {
   String name = '';
   String? uid;
 
+  String gender = '';
+  String email = '';
+  String dob = '';
+  String studentId = '';
+
   User? fUser;
+  fetchUserData() {
+    fUser = fAuth.currentUser!;
+    uid = fUser!.uid;
+
+    fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
+      if (snapshot.exists) {
+        setState(() {
+          name = snapshot.data()!['name'];
+          email = snapshot.data()!['email'];
+          dob = snapshot.data()!['birthday'];
+          gender = snapshot.data()!['gender'];
+          studentId = snapshot.data()!['studentID'];
+        });
+      }
+    });
+  }
 
   @override
   void initState() {
-    uid = fAuth.currentUser!.uid;
-
+    fetchUserData();
     super.initState();
   }
 
@@ -46,25 +66,15 @@ class _ProfilePageState extends State<ProfilePage> {
         child: ListView(
           children: [
             Padding(
-              padding: EdgeInsets.all(30),
+              padding: const EdgeInsets.all(30),
               child: SizedBox(
                 width: 340,
-                child: StreamBuilder(
-                    stream: fStore.collection('Users').doc(uid).snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        // AppUser appUser = new Appuser{}
-                        name = snapshot.data!.get('name');
-                        return Text(
-                          name,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(
-                              fontSize: 50, fontWeight: FontWeight.bold),
-                        );
-                      } else {
-                        return const Text("no data");
-                      }
-                    }),
+                child: Text(
+                  name,
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(
+                      fontSize: 50, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             Expanded(
@@ -113,11 +123,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1),
-                      child: const Align(
+                      child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Replace here with email from firebase",
-                          style: TextStyle(
+                          email,
+                          style: const TextStyle(
                               color: Color(0xFFF9CF00),
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
@@ -133,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Contact:",
+                          "Student ID:",
                           style: TextStyle(
                               color: Color(0xFFF9CF00),
                               fontWeight: FontWeight.bold,
@@ -144,11 +154,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1),
-                      child: const Align(
+                      child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Replace here with contact from firebase",
-                          style: TextStyle(
+                          studentId,
+                          style: const TextStyle(
                               color: Color(0xFFF9CF00),
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
@@ -175,11 +185,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1),
-                      child: const Align(
+                      child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Replace here with dob from firebase",
-                          style: TextStyle(
+                          dob,
+                          style: const TextStyle(
                               color: Color(0xFFF9CF00),
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
