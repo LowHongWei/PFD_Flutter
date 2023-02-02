@@ -30,11 +30,11 @@ class _LandingPageState extends State<LandingPage> {
   String? uid;
   User? fUser;
 
-  Future fetchUserData() async {
+  fetchUserData() {
     fUser = fAuth.currentUser!;
     uid = fUser!.uid;
 
-    await fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
+    fStore.collection('Users').doc(uid).get().then((snapshot) {
       if (snapshot.exists) {
         setState(() {
           name = snapshot.data()!['name'];
