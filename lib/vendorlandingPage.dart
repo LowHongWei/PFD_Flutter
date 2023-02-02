@@ -138,25 +138,14 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                           vertical: MediaQuery.of(context).size.height * 0.02),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: StreamBuilder(
-                            stream:
-                                fStore.collection('Users').doc(uid).snapshots(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                // AppUser appUser = new Appuser{}
-                                points = snapshot.data!.get('points');
-                                return Text(
-                                  'You have $points points', //Need to do backend
-                                  style: const TextStyle(
-                                      color: Color(0xFFF9CF00),
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                );
-                              } else {
-                                return const Text("no data");
-                              }
-                            }),
+                        child: Text(
+                          'You have $points points', //Need to do backend
+                          style: const TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                     SizedBox(
