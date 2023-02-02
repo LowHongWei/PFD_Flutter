@@ -24,7 +24,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
   final FirebaseAuth fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
   String name = '';
-  int? points;
+  var points;
   int? credit;
   String? uid;
   User? fUser;
@@ -43,8 +43,18 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
       }
     });
   }
-  Future claimPoints() async{
-    
+
+  Future claimPoints() async {
+    uid = fAuth.currentUser!.uid;
+    DocumentReference doc = fStore.collection('Users').doc(uid);
+
+    await fStore.collection('Users').doc(uid).get().then((snapshot) {
+      if (snapshot.exists) {
+        points = snapshot.data()!['points'];
+        doc.update({'credit': FieldValue.increment(points)});
+        doc.update({'points': 0});
+      }
+    });
   }
 
   @override
@@ -214,12 +224,13 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          (const GivePoints())),
-                                );
+                                claimPoints().then((value) => fetchUserData());
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           (const GivePoints())),
+                                // );
                               },
                               // ignore: prefer_const_constructors
                               child: ClipRRect(

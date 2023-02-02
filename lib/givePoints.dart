@@ -22,15 +22,15 @@ class _GivePointsState extends State<GivePoints> {
   User? fUser;
 
   Future updatePoints(String studentUid, int addPoints) async {
+    DocumentReference doc = fStore.collection('Users').doc(studentUid);
     fUser = fAuth.currentUser!;
     uid = fUser!.uid;
+    doc.update({'points': FieldValue.increment(addPoints)});
 
-    await fStore
-        .collection('Users')
-        .doc(studentUid)
-        .update({'points': FieldValue.increment(addPoints)});
-
-  
+    // await fStore
+    //     .collection('Users')
+    //     .doc(studentUid)
+    //     .update({'points': FieldValue.increment(addPoints)});
   }
 
   @override
@@ -341,7 +341,7 @@ class _GivePointsState extends State<GivePoints> {
                       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18)))),
                   onPressed: () {
-                    updatePoints('z5Gb53iruXOYERr7UPN1dEZ2O433', 100)
+                    updatePoints('z5Gb53iruXOYERr7UPN1dEZ2O433', 100) //put dynamic values
                         .then((value) => Navigator.pop(context));
                   },
                   child: const Text(
