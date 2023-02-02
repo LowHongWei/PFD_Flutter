@@ -13,34 +13,39 @@ class Redemption extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(0, 0, 0, 0),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF9CF00),
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        automaticallyImplyLeading: false,
         elevation: 0,
-        title: Image.asset(
-          'images/IconYellow.png',
-          fit: BoxFit.cover,
-          height: 200,
-          width: 200,
+        leading: GestureDetector(
+          onTap: () {
+            Feedback.forTap(context);
+            Navigator.pop(context);
+          },
+          child: Image.asset(
+            'images/BackArrowYellow.png',
+            fit: BoxFit.scaleDown,
+          ),
         ),
       ),
       body: Center(
         child: Column(
           children: [
             const SizedBox(
-              height: 60,
+              height: 20,
             ),
             Stack(
               alignment: Alignment.center,
               children: <Widget>[
                 Image.asset(
-                  'images/BigBankYellow.png',
-                  height: 100,
-                  width: 300,
-                ),
-                const Text(
-                  'Saved',
-                  style: TextStyle(color: Color(0xFFF9CF00), fontSize: 15),
+                  'images/BankSolidYellow.png',
+                  height: 150,
+                  width: 400,
                 ),
               ],
+            ),
+            const Text(
+              'Saved:',
+              style: TextStyle(color: Color(0xFFF9CF00), fontSize: 25),
             ),
             const SizedBox(height: 25),
             const Padding(
@@ -49,18 +54,10 @@ class Redemption extends StatelessWidget {
                 width: 320,
                 child: Text(
                   "Points",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: SizedBox(
-                width: 320,
-                child: Text(
-                  "Nothing brings people together like good food!",
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(
+                      color: Color(0xFFF9CF00),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30),
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -75,10 +72,10 @@ class Redemption extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: 150,
-                      height: 200,
+                      height: 150,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
+                              backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
                             Navigator.push(
@@ -89,34 +86,34 @@ class Redemption extends StatelessWidget {
                             );
                           },
                           child: const Text(
-                            'Redeem 10',
+                            'Redeem 10C',
                             style: TextStyle(
-                                color: Color(0xFFF9CF00),
+                                color: Colors.black,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           )),
                     ),
+                    const Padding(padding: EdgeInsets.all(16)),
                     const SizedBox(
                       height: 13,
                     ),
                     SizedBox(
                       width: 150,
-                      height: 200,
-                      child: OutlinedButton(
+                      height: 150,
+                      child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              side: const BorderSide(
-                                  width: 2.0, color: Colors.black),
+                              backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Register(),
+                                builder: (context) => const Login(),
                               ),
                             );
                           },
                           child: const Text(
-                            'Redeem 20',
+                            'Redeem 20C',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -125,15 +122,16 @@ class Redemption extends StatelessWidget {
                     )
                   ],
                 ),
+                const Padding(padding: EdgeInsets.all(16)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
                       width: 150,
-                      height: 200,
+                      height: 150,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
+                              backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
                             Navigator.push(
@@ -144,34 +142,34 @@ class Redemption extends StatelessWidget {
                             );
                           },
                           child: const Text(
-                            'Redeem 50',
+                            'Redeem 50C',
                             style: TextStyle(
-                                color: Color(0xFFF9CF00),
+                                color: Colors.black,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           )),
                     ),
+                    const Padding(padding: EdgeInsets.all(16)),
                     const SizedBox(
                       height: 13,
                     ),
                     SizedBox(
                       width: 150,
-                      height: 200,
-                      child: OutlinedButton(
+                      height: 150,
+                      child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              side: const BorderSide(
-                                  width: 2.0, color: Colors.black),
+                              backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Register(),
+                                builder: (context) => const Login(),
                               ),
                             );
                           },
                           child: const Text(
-                            'Redeem 100',
+                            'Redeem 100C',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,

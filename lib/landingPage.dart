@@ -148,7 +148,8 @@ class _LandingPageState extends State<LandingPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Redemption()),
+                                    builder: (context) => VendorLandingPage(),
+                                  ),
                                 );
                               },
                               // ignore: prefer_const_constructors
