@@ -27,12 +27,25 @@ class _LandingPageState extends State<LandingPage> {
   String name = '';
   int? points;
   String? uid;
-
   User? fUser;
+
+  Future fetchUserData() async {
+    fUser = fAuth.currentUser!;
+    uid = fUser!.uid;
+
+    await fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
+      if (snapshot.exists) {
+        setState(() {
+          name = snapshot.data()!['name'];
+          points = snapshot.data()!['points'];
+        });
+      }
+    });
+  }
 
   @override
   void initState() {
-    uid = fAuth.currentUser!.uid;
+    // fAuth.signOut();
     fetchUserData();
 
     super.initState();
@@ -224,18 +237,5 @@ class _LandingPageState extends State<LandingPage> {
         ),
       ),
     );
-  }
-
-  fetchUserData() {
-    fUser = fAuth.currentUser!;
-
-    fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
-      if (snapshot.exists) {
-        setState(() {
-          name = snapshot.data()!['name'];
-          points = snapshot.data()!['points'];
-        });
-      }
-    });
   }
 }

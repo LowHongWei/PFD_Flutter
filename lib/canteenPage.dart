@@ -24,16 +24,29 @@ class CanteenPage extends StatefulWidget {
 class _LandingPageState extends State<CanteenPage> {
   final FirebaseAuth fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
-  String name = '';
-  String gender = '';
+  String name = 'no data';
+  int? points;
   String? uid;
-
   User? fUser;
+
+  Future fetchUserData() async {
+    fUser = fAuth.currentUser!;
+    uid = fUser!.uid;
+
+    await fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
+      if (snapshot.exists) {
+        setState(() {
+          name = snapshot.data()!['name'];
+          points = snapshot.data()!['points'];
+        });
+      }
+    });
+  }
 
   @override
   void initState() {
-    // fetchUserData();
-    uid = fAuth.currentUser!.uid;
+    // fAuth.signOut();
+    fetchUserData();
 
     super.initState();
   }
@@ -58,7 +71,7 @@ class _LandingPageState extends State<CanteenPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => QrCode(),
+                  builder: (context) => const QrCode(),
                 ),
               );
             },
@@ -88,22 +101,12 @@ class _LandingPageState extends State<CanteenPage> {
               ),
               child: SizedBox(
                 width: 340,
-                child: StreamBuilder(
-                    stream: fStore.collection('Users').doc(uid).snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        // AppUser appUser = new Appuser{}
-                        name = snapshot.data!.get('name');
-                        return Text(
-                          "Welcome, " + name,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        );
-                      } else {
-                        return const Text("no data");
-                      }
-                    }),
+                child: Text(
+                  "Welcome, $name",
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             Expanded(
@@ -279,25 +282,6 @@ class _LandingPageState extends State<CanteenPage> {
         ),
       ),
     );
-  }
-
-  fetchUserData() async {
-    fUser = fAuth.currentUser!;
-    // final firebaseUser = fStore.collection('Users').doc(fUser!.uid);
-    final CollectionReference reference = fStore.collection('Users');
-
-    // DocumentSnapshot documentSnapshot = reference.doc(fUser!.uid).get().then((val);
-    // DocumentReference doc = fStore.doc(fUser!.uid);
-    // Future<DocumentSnapshot> name =
-    //     doc.get().then((value) => value.get('name'));
-    // print(name);
-    // DocumentSnapshot documentSnapshot = doc.snapshots();
-
-    fStore.collection('Users').doc(fUser!.uid).get().then((doc) {
-      final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      name = data['name'];
-      print(name);
-    });
   }
 }
 

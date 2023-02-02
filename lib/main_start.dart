@@ -12,29 +12,41 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'landingPage.dart';
 
-class MainStart extends StatelessWidget {
+class MainStart extends StatefulWidget {
   const MainStart({super.key});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-      body: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            final fAuth = FirebaseAuth.instance;
-            final fStore = FirebaseFirestore.instance;
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return const Center(child: Text("Something went wrong"));
-            } else if (snapshot.hasData) {
-              // fAuth.signOut();
+  State<MainStart> createState() => _MainStartState();
+}
 
-              if (snapshot.data!.email == "john@gmail.com")
-                return VendorLandingPage();
-              return LandingPage();
-              // fAuth.signOut();
-            } else {
-              return MainMenu();
-            }
-          }));
+class _MainStartState extends State<MainStart> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return const Center(child: Text("Something went wrong"));
+              } else if (snapshot.hasData) {
+                // fAuth.signOut();
+
+                if (snapshot.data!.email == "john@gmail.com") {
+                  return const VendorLandingPage();
+                }
+
+                return const LandingPage();
+                // fAuth.signOut();
+              } else {
+                return const MainMenu();
+              }
+            }));
+  }
 }
