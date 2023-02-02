@@ -21,19 +21,22 @@ class _GivePointsState extends State<GivePoints> {
   String? uid;
   User? fUser;
 
-  Future updatePoints(String studentUid, int points) async {
+  Future updatePoints(String studentUid, int addPoints) async {
     fUser = fAuth.currentUser!;
     uid = fUser!.uid;
 
-    fStore.collection('Users').doc(studentUid).update({'points': points});
+    await fStore
+        .collection('Users')
+        .doc(studentUid)
+        .update({'points': FieldValue.increment(addPoints)});
 
-    await fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
-      if (snapshot.exists) {
-        setState(() {
-          points = snapshot.data()!['points'];
-        });
-      }
-    });
+    // fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
+    //   if (snapshot.exists) {
+    //     points = int.parse(snapshot.data()!['points']) + 100;
+
+    //     fStore.collection('Users').doc(studentUid).update({'points': FieldValue.increment(addPoints)});
+    //   }
+    // });
   }
 
   @override
@@ -344,8 +347,8 @@ class _GivePointsState extends State<GivePoints> {
                       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18)))),
                   onPressed: () {
-                    updatePoints('z5Gb53iruXOYERr7UPN1dEZ2O433', 100)
-                        .then((value) => Navigator.pop(context));
+                    updatePoints('z5Gb53iruXOYERr7UPN1dEZ2O433', 100);
+                    // .then((value) => Navigator.pop(context));
                   },
                   child: const Text(
                     "Confirm",
