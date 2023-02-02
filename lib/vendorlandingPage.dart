@@ -199,7 +199,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                                           MediaQuery.of(context).size.height *
                                               0.05),
                                   child: const Text(
-                                    'Scan Q Code',
+                                    'Scan QR Code',
                                     style: TextStyle(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold),
