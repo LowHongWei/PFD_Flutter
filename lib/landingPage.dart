@@ -25,15 +25,15 @@ class _LandingPageState extends State<LandingPage> {
   final FirebaseAuth fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
   String name = '';
-  String gender = '';
+  int? points;
   String? uid;
 
   User? fUser;
 
   @override
   void initState() {
-    // fetchUserData();
     uid = fAuth.currentUser!.uid;
+    fetchUserData();
 
     super.initState();
   }
@@ -58,7 +58,7 @@ class _LandingPageState extends State<LandingPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => QrCode(),
+                  builder: (context) => const QrCode(),
                 ),
               );
             },
@@ -88,22 +88,12 @@ class _LandingPageState extends State<LandingPage> {
               ),
               child: SizedBox(
                 width: 340,
-                child: StreamBuilder(
-                    stream: fStore.collection('Users').doc(uid).snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        // AppUser appUser = new Appuser{}
-                        name = snapshot.data!.get('name');
-                        return Text(
-                          "Welcome, " + name,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        );
-                      } else {
-                        return const Text("no data");
-                      }
-                    }),
+                child: Text(
+                  "Welcome, $name",
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             Expanded(
@@ -123,11 +113,11 @@ class _LandingPageState extends State<LandingPage> {
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1,
                           vertical: MediaQuery.of(context).size.height * 0.02),
-                      child: const Align(
+                      child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'You have 200 points', //Need to do backend
-                          style: TextStyle(
+                          '$points points', //Need to do backend
+                          style: const TextStyle(
                               color: Color(0xFFF9CF00),
                               fontSize: 40,
                               fontWeight: FontWeight.bold),
@@ -152,7 +142,7 @@ class _LandingPageState extends State<LandingPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Redemption(),
+                                    builder: (context) => const Redemption(),
                                   ),
                                 );
                               },
@@ -236,22 +226,16 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  fetchUserData() async {
+  fetchUserData() {
     fUser = fAuth.currentUser!;
-    // final firebaseUser = fStore.collection('Users').doc(fUser!.uid);
-    final CollectionReference reference = fStore.collection('Users');
 
-    // DocumentSnapshot documentSnapshot = reference.doc(fUser!.uid).get().then((val);
-    // DocumentReference doc = fStore.doc(fUser!.uid);
-    // Future<DocumentSnapshot> name =
-    //     doc.get().then((value) => value.get('name'));
-    // print(name);
-    // DocumentSnapshot documentSnapshot = doc.snapshots();
-
-    fStore.collection('Users').doc(fUser!.uid).get().then((doc) {
-      final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      name = data['name'];
-      print(name);
+    fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
+      if (snapshot.exists) {
+        setState(() {
+          name = snapshot.data()!['name'];
+          points = snapshot.data()!['points'];
+        });
+      }
     });
   }
 }

@@ -33,20 +33,6 @@ class MainStart extends StatelessWidget {
                 return VendorLandingPage();
               return LandingPage();
               // fAuth.signOut();
-
-              // return StreamBuilder(
-              //     stream: fStore
-              //         .collection('Users')
-              //         .doc(fAuth.currentUser!.uid)
-              //         .snapshots(),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.hasData) {
-              //         String type = snapshot.data!.get('type');
-
-              //         if (type == 'student') return VendorLandingPage();
-              //       }
-              //       return MainMenu();
-              //     });
             } else {
               return MainMenu();
             }
