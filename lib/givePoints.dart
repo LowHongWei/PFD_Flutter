@@ -347,8 +347,8 @@ class _GivePointsState extends State<GivePoints> {
                       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18)))),
                   onPressed: () {
-                    updatePoints('z5Gb53iruXOYERr7UPN1dEZ2O433', 100);
-                    // .then((value) => Navigator.pop(context));
+                    updatePoints('z5Gb53iruXOYERr7UPN1dEZ2O433', 100)
+                        .then((value) => Navigator.pop(context));
                   },
                   child: const Text(
                     "Confirm",
