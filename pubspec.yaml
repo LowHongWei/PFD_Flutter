@@ -47,6 +47,8 @@ dependencies:
   qr_code_scanner: ^1.0.1
   #email validator
   email_validator: ^2.1.17
+  #notification
+  # flutter_local_notifications: ^13.0.0
 
   provider:
 

@@ -1,5 +1,8 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pfd_flutter/scanQrCode.dart';
 
 class GivePoints extends StatefulWidget {
   const GivePoints({super.key});
@@ -11,6 +14,25 @@ class GivePoints extends StatefulWidget {
 class _GivePointsState extends State<GivePoints> {
   int cupQty = 0;
   int containerQty = 0;
+
+  final FirebaseAuth fAuth = FirebaseAuth.instance;
+  final fStore = FirebaseFirestore.instance;
+  int? points;
+  String? uid;
+  User? fUser;
+
+  Future updatePoints(String studentUid, int addPoints) async {
+    DocumentReference doc = fStore.collection('Users').doc(studentUid);
+    fUser = fAuth.currentUser!;
+    uid = fUser!.uid;
+    doc.update({'points': FieldValue.increment(addPoints)});
+
+    // await fStore
+    //     .collection('Users')
+    //     .doc(studentUid)
+    //     .update({'points': FieldValue.increment(addPoints)});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -318,7 +340,10 @@ class _GivePointsState extends State<GivePoints> {
                           MaterialStateProperty.all(const Color(0xFF272D2F)),
                       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18)))),
-                  onPressed: () {},
+                  onPressed: () {
+                    updatePoints('z5Gb53iruXOYERr7UPN1dEZ2O433', 100) //put dynamic values
+                        .then((value) => Navigator.pop(context));
+                  },
                   child: const Text(
                     "Confirm",
                     style: TextStyle(

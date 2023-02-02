@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/givePoints.dart';
+import 'package:pfd_flutter/landingPage.dart';
 import 'package:pfd_flutter/main_menu.dart';
 import 'package:pfd_flutter/main_start.dart';
 import 'package:pfd_flutter/profile.dart';
@@ -8,6 +10,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'currentOrder.dart';
 import 'scanQrCode.dart';
+import 'package:pfd_flutter/canteenPage.dart';
+import 'package:intl/intl.dart';
 
 class VendorLandingPage extends StatefulWidget {
   const VendorLandingPage({super.key});
@@ -20,14 +24,43 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
   final FirebaseAuth fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
   String name = '';
-  int? points;
+  var points;
+  int? credit;
   String? uid;
   User? fUser;
+
+  Future fetchUserData() async {
+    fUser = fAuth.currentUser!;
+    uid = fUser!.uid;
+
+    await fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
+      if (snapshot.exists) {
+        setState(() {
+          name = snapshot.data()!['name'];
+          points = snapshot.data()!['points'];
+          credit = snapshot.data()!['credit'];
+        });
+      }
+    });
+  }
+
+  Future claimPoints() async {
+    uid = fAuth.currentUser!.uid;
+    DocumentReference doc = fStore.collection('Users').doc(uid);
+
+    await fStore.collection('Users').doc(uid).get().then((snapshot) {
+      if (snapshot.exists) {
+        points = snapshot.data()!['points'];
+        doc.update({'credit': FieldValue.increment(points)});
+        doc.update({'points': 0});
+      }
+    });
+  }
 
   @override
   void initState() {
     // fAuth.signOut();
-    uid = fAuth.currentUser!.uid;
+    fetchUserData();
 
     super.initState();
   }
@@ -92,29 +125,12 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
-                        StreamBuilder(
-                            stream:
-                                fStore.collection('Users').doc(uid).snapshots(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                name = snapshot.data!.get('name');
-                                return Text(
-                                  textAlign: TextAlign.start,
-                                  name, //Need to do backend
-                                  style: const TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold),
-                                );
-                              } else {
-                                return const Text("no data");
-                              }
-                            }),
-                        // Text(
-                        //   textAlign: TextAlign.start,
-                        //   "Food Club!", //Need to do backend
-                        //   style: TextStyle(
-                        //       fontSize: 30, fontWeight: FontWeight.bold),
-                        // ),
+                        Text(
+                          textAlign: TextAlign.start,
+                          name, //Need to do backend
+                          style: const TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   )),
@@ -138,33 +154,16 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                           vertical: MediaQuery.of(context).size.height * 0.02),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: StreamBuilder(
-                            stream:
-                                fStore.collection('Users').doc(uid).snapshots(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                // AppUser appUser = new Appuser{}
-                                points = snapshot.data!.get('points');
-                                return Text(
-                                  'You have $points points', //Need to do backend
-                                  style: const TextStyle(
-                                      color: Color(0xFFF9CF00),
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                );
-                              } else {
-                                return const Text("no data");
-                              }
-                            }),
-                        // Text(
-                        //   'You have 200 points', //Need to do backend
-                        //   style: TextStyle(
-                        //       color: Color(0xFFF9CF00),
-                        //       fontSize: 40,
-                        //       fontWeight: FontWeight.bold),
-                        //   textAlign: TextAlign.center,
-                        // ),
+                        child: Text(
+                          '$points points\ncredit:\t${NumberFormat.simpleCurrency(locale: 'en_SG', decimalDigits: 2).format(credit! / 500)}', //Need to do backend
+                          //  NumberFormat.simpleCurrency(locale: 'en_SG', decimalDigits: 2).format(credit),
+                          // '$points points\n', //Need to do backend
+                          style: const TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -225,12 +224,13 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          (const MainStart())),
-                                );
+                                claimPoints().then((value) => fetchUserData());
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           (const GivePoints())),
+                                // );
                               },
                               // ignore: prefer_const_constructors
                               child: ClipRRect(
@@ -313,268 +313,3 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
     );
   }
 }
-
-// class VendorLandingPage extends StatelessWidget {
-//   const VendorLandingPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       resizeToAvoidBottomInset: false,
-//       backgroundColor: const Color(0xFFF9CF00),
-//       appBar: AppBar(
-//         automaticallyImplyLeading: false,
-//         backgroundColor: const Color(0xFFF9CF00),
-//         elevation: 0,
-//         title: Image.asset(
-//           'images/IconBlack.png',
-//           fit: BoxFit.cover,
-//           height: MediaQuery.of(context).size.height * 0.08,
-//           width: MediaQuery.of(context).size.width * 0.6,
-//         ),
-//         actions: [
-//           IconButton(
-//             onPressed: () {
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                   builder: (context) => const QrCode(),
-//                 ),
-//               );
-//             },
-//             icon: Image.asset('images/qr-code black.png'),
-//           ),
-//           IconButton(
-//             icon: Image.asset('images/user.png'),
-//             iconSize: 50,
-//             onPressed: () {
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                   builder: (context) => const ProfilePage(),
-//                 ),
-//               );
-//             },
-//           ),
-//         ],
-//       ),
-//       body: Center(
-//         child: ListView(
-//           children: [
-//             Padding(
-//               padding: EdgeInsets.symmetric(
-//                   horizontal: MediaQuery.of(context).size.width * 0.1,
-//                   vertical: MediaQuery.of(context).size.height * 0.02),
-//               child: SizedBox(
-//                   width: MediaQuery.of(context).size.width * 1,
-//                   child: Align(
-//                     alignment: Alignment.centerLeft,
-//                     child: Column(
-//                       children: const [
-//                         Text(
-//                           textAlign: TextAlign.start,
-//                           "Welcome,",
-//                           style: TextStyle(
-//                               fontSize: 30, fontWeight: FontWeight.bold),
-//                         ),
-//                         Text(
-//                           textAlign: TextAlign.start,
-//                           "Food Club!", //Need to do backend
-//                           style: TextStyle(
-//                               fontSize: 30, fontWeight: FontWeight.bold),
-//                         ),
-//                       ],
-//                     ),
-//                   )),
-//             ),
-//             Expanded(
-//               child: Container(
-//                 width: double.infinity,
-//                 height: MediaQuery.of(context).size.height * 0.79,
-//                 decoration: const BoxDecoration(
-//                   color: Colors.black,
-//                   borderRadius: BorderRadius.only(
-//                     topLeft: Radius.circular(35),
-//                     topRight: Radius.circular(35),
-//                   ),
-//                 ),
-//                 child: Column(
-//                   children: [
-//                     Padding(
-//                       padding: EdgeInsets.symmetric(
-//                           horizontal: MediaQuery.of(context).size.width * 0.1,
-//                           vertical: MediaQuery.of(context).size.height * 0.02),
-//                       child: Align(
-//                         alignment: Alignment.topLeft,
-//                         child:StreamBuilder(
-//                     stream: fStore.collection('Users').doc(uid).snapshots(),
-//                     builder: (context, snapshot) {
-//                       if (snapshot.hasData) {
-//                         // AppUser appUser = new Appuser{}
-//                         name = snapshot.data!.get('name');
-//                         return Text(
-//                           name,
-//                           textAlign: TextAlign.start,
-//                           style: const TextStyle(
-//                               fontSize: 20, fontWeight: FontWeight.bold),
-//                         );
-//                       } else {
-//                         return const Text("no data");
-//                       }
-//                     }), 
-//                         // Text(
-//                         //   'You have 200 points', //Need to do backend
-//                         //   style: TextStyle(
-//                         //       color: Color(0xFFF9CF00),
-//                         //       fontSize: 40,
-//                         //       fontWeight: FontWeight.bold),
-//                         //   textAlign: TextAlign.center,
-//                         // ),
-//                       ),
-//                     ),
-//                     SizedBox(
-//                       height: MediaQuery.of(context).size.height * 0.03,
-//                     ),
-//                     SizedBox(
-//                       width: MediaQuery.of(context).size.width * 0.8,
-//                       height: MediaQuery.of(context).size.height * 0.15,
-//                       child: DecoratedBox(
-//                         decoration: BoxDecoration(
-//                             color: const Color(0xFFF9CF00),
-//                             borderRadius: BorderRadius.circular(18)),
-//                         child: Column(
-//                           children: [
-//                             GestureDetector(
-//                               onTap: () {
-//                                 Navigator.push(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                       builder: (context) => const ScanQR()),
-//                                 );
-//                               },
-//                               // ignore: prefer_const_constructors
-//                               child: ClipRRect(
-//                                 borderRadius: const BorderRadius.all(
-//                                   Radius.circular(35),
-//                                 ),
-//                                 // ignore: prefer_const_constructors
-//                                 child: Padding(
-//                                   padding: EdgeInsets.symmetric(
-//                                       vertical:
-//                                           MediaQuery.of(context).size.height *
-//                                               0.05),
-//                                   child: const Text(
-//                                     'Scan QR Code',
-//                                     style: TextStyle(
-//                                         fontSize: 25,
-//                                         fontWeight: FontWeight.bold),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                     SizedBox(
-//                       height: MediaQuery.of(context).size.height * 0.03,
-//                     ),
-//                     SizedBox(
-//                       width: MediaQuery.of(context).size.width * 0.8,
-//                       height: MediaQuery.of(context).size.height * 0.15,
-//                       child: DecoratedBox(
-//                         decoration: BoxDecoration(
-//                             color: const Color(0xFFF9CF00),
-//                             borderRadius: BorderRadius.circular(18)),
-//                         child: Column(
-//                           children: [
-//                             GestureDetector(
-//                               onTap: () {
-//                                 Navigator.push(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                       builder: (context) =>
-//                                           (const MainStart())),
-//                                 );
-//                               },
-//                               // ignore: prefer_const_constructors
-//                               child: ClipRRect(
-//                                 borderRadius: const BorderRadius.only(
-//                                   topLeft: Radius.circular(18),
-//                                   topRight: Radius.circular(18),
-//                                 ),
-//                                 // ignore: prefer_const_constructors
-//                                 child: Padding(
-//                                   padding: EdgeInsets.symmetric(
-//                                       vertical:
-//                                           MediaQuery.of(context).size.height *
-//                                               0.05),
-//                                   child: const Text(
-//                                     'Claim all points',
-//                                     style: TextStyle(
-//                                         fontSize: 25,
-//                                         fontWeight: FontWeight.bold),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                     SizedBox(
-//                       height: MediaQuery.of(context).size.height * 0.03,
-//                     ),
-//                     SizedBox(
-//                       width: MediaQuery.of(context).size.width * 0.8,
-//                       height: MediaQuery.of(context).size.height * 0.15,
-//                       child: DecoratedBox(
-//                         decoration: BoxDecoration(
-//                             color: const Color(0xFFF9CF00),
-//                             borderRadius: BorderRadius.circular(18)),
-//                         child: Column(
-//                           children: [
-//                             GestureDetector(
-//                               onTap: () {
-//                                 Navigator.push(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                       builder: (context) =>
-//                                           const CurrentOrder()),
-//                                 );
-//                               },
-//                               // ignore: prefer_const_constructors
-//                               child: ClipRRect(
-//                                 borderRadius: const BorderRadius.only(
-//                                   topLeft: Radius.circular(18),
-//                                   topRight: Radius.circular(18),
-//                                 ),
-//                                 // ignore: prefer_const_constructors
-//                                 child: Padding(
-//                                   padding: EdgeInsets.symmetric(
-//                                       vertical:
-//                                           MediaQuery.of(context).size.height *
-//                                               0.05),
-//                                   child: const Text(
-//                                     'Current orders',
-//                                     style: TextStyle(
-//                                         fontSize: 25,
-//                                         fontWeight: FontWeight.bold),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

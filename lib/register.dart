@@ -332,8 +332,6 @@ class _RegisterState extends State<Register> {
     );
   }
 
-
-
   Future signUp() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
@@ -364,7 +362,9 @@ class _RegisterState extends State<Register> {
       'gender': gender,
       'studentID': studentIdController.text.trim(),
       'birthday': birthdayController.text.trim(),
-      'type': 'student'
+      'points': 0,
+      'type': 'student',
+      'uid': uid,
     };
 
     docUser.set(json);
