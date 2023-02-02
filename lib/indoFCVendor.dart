@@ -1,12 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/canteenPage.dart';
+import 'package:pfd_flutter/cart_model.dart';
 import 'package:pfd_flutter/error404.dart';
+import 'package:pfd_flutter/food_item_model.dart';
+import 'package:pfd_flutter/food_item_tile.dart';
 import 'package:pfd_flutter/main_menu.dart';
 import 'package:pfd_flutter/main_start.dart';
 import 'package:pfd_flutter/profile.dart';
 import 'package:pfd_flutter/qrCode.dart';
 import 'package:pfd_flutter/redemption.dart';
+import 'package:provider/provider.dart';
 
 import 'currentOrder.dart';
 import 'scanQrCode.dart';
@@ -108,197 +112,24 @@ class FCIndoVendor extends StatelessWidget {
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            color: const Color(0xFFF9CF00),
-                            borderRadius: BorderRadius.circular(18)),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const FCIndoVendor(),
-                                  ),
-                                );
-                              },
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(18),
-                                  bottomLeft: Radius.circular(18),
-                                ),
-                                child: Image.asset(
-                                  'images/ayam penyet.jpg',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.45,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.18,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(
-                                  MediaQuery.of(context).size.width * 0.07),
-                              child: const Text(
-                                'Ayam Penyet',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            color: const Color(0xFFF9CF00),
-                            borderRadius: BorderRadius.circular(18)),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Error404(),
-                                  ),
-                                );
-                              },
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(18),
-                                  bottomLeft: Radius.circular(18),
-                                ),
-                                child: Image.asset(
-                                  'images/maggi goreng.jpeg',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.45,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.18,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(
-                                  MediaQuery.of(context).size.width * 0.045),
-                              child: const Text(
-                                'Maggie Goreng',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            color: const Color(0xFFF9CF00),
-                            borderRadius: BorderRadius.circular(18)),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Error404(),
-                                  ),
-                                );
-                              },
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(18),
-                                  bottomLeft: Radius.circular(18),
-                                ),
-                                child: Image.asset(
-                                  'images/nasi goreng.jpg',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.45,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.18,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(
-                                  MediaQuery.of(context).size.width * 0.08),
-                              child: const Text(
-                                'Nasi Goreng',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            color: const Color(0xFFF9CF00),
-                            borderRadius: BorderRadius.circular(18)),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Error404(),
-                                  ),
-                                );
-                              },
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(18),
-                                  bottomLeft: Radius.circular(18),
-                                ),
-                                child: Image.asset(
-                                  'images/nasi lemak.jpeg',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.45,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.18,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(
-                                  MediaQuery.of(context).size.width * 0.09),
-                              child: const Text(
-                                'Nasi Lemak',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                    Expanded(
+                      child: Consumer<FoodItemModel>(
+                          builder: (context, value, child) {
+                        return GridView.builder(
+                          itemCount: value.foodItem.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 1, childAspectRatio: (2.3)),
+                          itemBuilder: (context, index) {
+                            return FoodItemTile(
+                              itemName: value.foodItem[index][0],
+                              itemImagePath: value.foodItem[index][1],
+                              itemPrice: value.foodItem[index][2],
+                              itemOption: value.foodItem[index][3],
+                            );
+                          },
+                        );
+                      }),
                     ),
                   ],
                 ),

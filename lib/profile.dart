@@ -45,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Center(
         child: ListView(
           children: [
-             Padding(
+            Padding(
               padding: EdgeInsets.all(30),
               child: SizedBox(
                 width: 340,
@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           name,
                           textAlign: TextAlign.start,
                           style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 50, fontWeight: FontWeight.bold),
                         );
                       } else {
                         return const Text("no data");
@@ -70,19 +70,21 @@ class _ProfilePageState extends State<ProfilePage> {
             Expanded(
               child: Container(
                 width: double.infinity,
+                height: MediaQuery.of(context).size.height * 1,
                 decoration: const BoxDecoration(
-                  color: Colors.black,
+                  color: Color(0xFF272D2F),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(35),
                     topRight: Radius.circular(35),
                   ),
                 ),
                 child: Column(
-                  children: const [
+                  children: [
                     Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 26),
-                      child: Align(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1,
+                          vertical: MediaQuery.of(context).size.height * 0.03),
+                      child: const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Profile',
@@ -94,6 +96,99 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1),
+                      child: const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Email:",
+                          style: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1),
+                      child: const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Replace here with email from firebase",
+                          style: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1),
+                      child: const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Contact:",
+                          style: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1),
+                      child: const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Replace here with contact from firebase",
+                          style: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1),
+                      child: const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Date of birth:",
+                          style: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1),
+                      child: const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Replace here with dob from firebase",
+                          style: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
+                    ),
                   ],
                 ),
               ),
@@ -104,76 +199,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-
-// class ProfilePage extends StatelessWidget {
-//   const ProfilePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: const Color(0xFFF9CF00),
-//       appBar: AppBar(
-//         backgroundColor: const Color(0xFFF9CF00),
-//         elevation: 0,
-//         leading: GestureDetector(
-//           onTap: () {
-//             Feedback.forTap(context);
-//             Navigator.pop(context);
-//           },
-//           child: Image.asset(
-//             'images/BackArrowBlack.png',
-//             fit: BoxFit.scaleDown,
-//           ),
-//         ),
-//       ),
-//       body: Center(
-//         child: ListView(
-//           children: [
-//             const Padding(
-//               padding: EdgeInsets.all(30),
-//               child: SizedBox(
-//                 width: 340,
-//                 child: Text(
-//                   textAlign: TextAlign.start,
-//                   "Welcome, John Doe!",
-//                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//                 ),
-//               ),
-//             ),
-//             Expanded(
-//               child: Container(
-//                 width: double.infinity,
-//                 decoration: const BoxDecoration(
-//                   color: Colors.black,
-//                   borderRadius: BorderRadius.only(
-//                     topLeft: Radius.circular(35),
-//                     topRight: Radius.circular(35),
-//                   ),
-//                 ),
-//                 child: Column(
-//                   children: const [
-//                     Padding(
-//                       padding:
-//                           EdgeInsets.symmetric(horizontal: 40, vertical: 26),
-//                       child: Align(
-//                         alignment: Alignment.topLeft,
-//                         child: Text(
-//                           'Profile',
-//                           style: TextStyle(
-//                               color: Color(0xFFF9CF00),
-//                               fontSize: 35,
-//                               fontWeight: FontWeight.bold),
-//                           textAlign: TextAlign.right,
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

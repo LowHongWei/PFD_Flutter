@@ -48,6 +48,8 @@ dependencies:
   #email validator
   email_validator: ^2.1.17
 
+  provider:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

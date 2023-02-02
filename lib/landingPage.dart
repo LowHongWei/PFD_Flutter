@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/Cart.dart';
 import 'package:pfd_flutter/canteenPage.dart';
 import 'package:pfd_flutter/currentOrder.dart';
 import 'package:pfd_flutter/foodClubVendors.dart';
@@ -63,6 +64,17 @@ class _LandingPageState extends State<LandingPage> {
               );
             },
             icon: Image.asset('images/qr-code black.png'),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Cart(),
+                ),
+              );
+            },
+            icon: Image.asset('images/cart.png'),
           ),
           IconButton(
             icon: Image.asset('images/user.png'),
