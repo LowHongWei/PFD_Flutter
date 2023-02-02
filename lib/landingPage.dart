@@ -152,6 +152,7 @@ class _LandingPageState extends State<LandingPage> {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                // updatePoints();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

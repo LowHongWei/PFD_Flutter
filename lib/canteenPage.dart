@@ -1,6 +1,7 @@
 // import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/currentOrder.dart';
+import 'package:pfd_flutter/error404.dart';
 import 'package:pfd_flutter/foodClubVendors.dart';
 import 'package:pfd_flutter/givePoints.dart';
 import 'package:pfd_flutter/profile.dart';
@@ -196,7 +197,7 @@ class _LandingPageState extends State<CanteenPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => VendorLandingPage(),
+                                    builder: (context) => const Error404(),
                                   ),
                                 );
                               },

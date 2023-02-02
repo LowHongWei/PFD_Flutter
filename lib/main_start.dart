@@ -21,6 +21,8 @@ class MainStart extends StatefulWidget {
 
 class _MainStartState extends State<MainStart> {
   @override
+  final fAuth = FirebaseAuth.instance;
+
   void initState() {
     super.initState();
   }
