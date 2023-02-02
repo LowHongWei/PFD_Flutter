@@ -30,13 +30,7 @@ class _GivePointsState extends State<GivePoints> {
         .doc(studentUid)
         .update({'points': FieldValue.increment(addPoints)});
 
-    // fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
-    //   if (snapshot.exists) {
-    //     points = int.parse(snapshot.data()!['points']) + 100;
-
-    //     fStore.collection('Users').doc(studentUid).update({'points': FieldValue.increment(addPoints)});
-    //   }
-    // });
+  
   }
 
   @override

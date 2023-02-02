@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'currentOrder.dart';
 import 'scanQrCode.dart';
 import 'package:pfd_flutter/canteenPage.dart';
+import 'package:intl/intl.dart';
 
 class VendorLandingPage extends StatefulWidget {
   const VendorLandingPage({super.key});
@@ -24,6 +25,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
   final fStore = FirebaseFirestore.instance;
   String name = '';
   int? points;
+  int? credit;
   String? uid;
   User? fUser;
 
@@ -36,9 +38,13 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
         setState(() {
           name = snapshot.data()!['name'];
           points = snapshot.data()!['points'];
+          credit = snapshot.data()!['credit'];
         });
       }
     });
+  }
+  Future claimPoints() async{
+    
   }
 
   @override
@@ -139,7 +145,9 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'You have $points points', //Need to do backend
+                          '$points points\ncredit:\t${NumberFormat.simpleCurrency(locale: 'en_SG', decimalDigits: 2).format(credit! / 500)}', //Need to do backend
+                          //  NumberFormat.simpleCurrency(locale: 'en_SG', decimalDigits: 2).format(credit),
+                          // '$points points\n', //Need to do backend
                           style: const TextStyle(
                               color: Color(0xFFF9CF00),
                               fontSize: 40,
