@@ -39,7 +39,7 @@ class Error404 extends StatelessWidget {
               child: SizedBox(
                 width: 320,
                 child: Text(
-                  "Error 404",
+                  "Error 404",234
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   textAlign: TextAlign.start,
                 ),
