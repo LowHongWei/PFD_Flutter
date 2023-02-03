@@ -15,9 +15,27 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  final fAuth = FirebaseAuth.instance;
+  final fStore = FirebaseFirestore.instance;
+  List list = [
+    'ayam penyet',
+    2,
+    'maggi goreng',
+    2
+  ]; // list must be in this format
+
   @override
   void initState() {
     super.initState();
+  }
+
+  Future addList(List cartList) async {
+    DocumentReference docUser = fStore.collection('Users').doc('cart');
+    // List list = ['ayam penyet', 2, 'maggi goreng', 2]; List must be in this format
+
+    final json = {'cartItems': cartList};
+
+    docUser.set(json);
   }
 
   @override
@@ -334,7 +352,9 @@ class _CartState extends State<Cart> {
                                           Icon(Icons.arrow_forward)
                                         ],
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        addList(list); // change list to ur list
+                                      },
                                     ),
                                   )
                                 ],
