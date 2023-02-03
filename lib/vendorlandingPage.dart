@@ -8,6 +8,7 @@ import 'package:pfd_flutter/main_start.dart';
 import 'package:pfd_flutter/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pfd_flutter/test.dart';
 import 'package:pfd_flutter/userQrCode.dart';
 import 'currentOrder.dart';
 import 'scanQrCode.dart';
@@ -332,8 +333,8 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const AdvanceOrder()),
+                                      builder: (context) => const Test()),
+                                  //AdvanceOrder
                                 );
                               },
                               // ignore: prefer_const_constructors

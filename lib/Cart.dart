@@ -18,12 +18,10 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   final fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
-  List list = [
-    'ayam penyet',
-    2,
-    'maggi goreng',
-    2
-  ]; // list must be in this format
+  List list = [];
+
+  
+ // list must be in this format
 
   @override
   void initState() {
@@ -33,8 +31,18 @@ class _CartState extends State<Cart> {
   Future addList(List cartList) async {
     DocumentReference docUser = fStore.collection('Users').doc('cart');
     // List list = ['ayam penyet', 2, 'maggi goreng', 2]; List must be in this format
+    List list = [];
 
-    final json = {'cartItems': cartList};
+
+    for (var i = 0; i < cartList.length; i++) {
+      //nested list to list
+      list.add(cartList[0][0]);
+      list.add(cartList[0][1]);
+    }
+
+    final json = {
+      'cartItems': list
+    };
 
     docUser.set(json);
   }
@@ -354,18 +362,19 @@ class _CartState extends State<Cart> {
                                         ],
                                       ),
                                       onPressed: () {
-                                        addList(list).then((value) {// change the list to ur list
+                                        addList(list).then((value) {
+                                          // change the list to ur list
                                           Provider.of<FoodItemModel>(context,
-                                                listen: false)
-                                            .clearCart();
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => const Payment(),
-                                          ),
-                                        );
+                                                  listen: false)
+                                              .clearCart();
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Payment(),
+                                            ),
+                                          );
                                         });
-                                        
                                       },
                                     ),
                                   )
