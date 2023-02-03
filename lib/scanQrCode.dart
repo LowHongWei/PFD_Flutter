@@ -90,7 +90,9 @@ class _ScanQRState extends State<ScanQR> {
             color: Colors.white24, borderRadius: BorderRadius.circular(8)),
         child: barcode != null
             ? ElevatedButton(
-                onPressed: () {}, child: const Text('Redeem Voucher!'))
+                onPressed: () {
+                  
+                }, child: const Text('Redeem Voucher!'))
             : const Text(
                 'Scan a code!',
                 maxLines: 3,

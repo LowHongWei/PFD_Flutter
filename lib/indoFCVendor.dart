@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/Cart.dart';
 import 'package:pfd_flutter/canteenPage.dart';
 import 'package:pfd_flutter/cart_model.dart';
 import 'package:pfd_flutter/error404.dart';
@@ -24,7 +25,6 @@ class FCIndoVendor extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF9CF00),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFFF9CF00),
         elevation: 0,
         title: Image.asset(
@@ -44,6 +44,17 @@ class FCIndoVendor extends StatelessWidget {
               );
             },
             icon: Image.asset('images/qr-code black.png'),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Cart(),
+                ),
+              );
+            },
+            icon: Image.asset('images/cart.png'),
           ),
           IconButton(
             icon: Image.asset('images/user.png'),
@@ -83,34 +94,16 @@ class FCIndoVendor extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              color: Color(0xFFF9CF00),
-                              size: 50,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.07),
-                          child: const Text(
-                            "Indonesian",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 40,
-                                color: Color(0xFFF9CF00)),
-                          ),
-                        )
-                      ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.07),
+                      child: const Text(
+                        "Indonesian",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40,
+                            color: Color(0xFFF9CF00)),
+                      ),
                     ),
                     Expanded(
                       child: Consumer<FoodItemModel>(
