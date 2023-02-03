@@ -12,9 +12,9 @@ class MainMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
 
-
       backgroundColor: const Color(0xFFF9CF00),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFFF9CF00),
         elevation: 0,
         title: Image.asset(

@@ -1,16 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/redemption.dart';
 import 'package:pfd_flutter/scanQrCode.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class QrCode extends StatefulWidget {
-  const QrCode({super.key});
+class UserQrCode extends StatefulWidget {
+  const UserQrCode({super.key});
 
   @override
-  State<QrCode> createState() => _QrCodeState();
-  static bool redeemVoucher = true;
+  State<UserQrCode> createState() => _UserQrCodeState();
+  static bool redeemVoucher = false;
 }
 
-class _QrCodeState extends State<QrCode> {
+class _UserQrCodeState extends State<UserQrCode> {
+  final FirebaseAuth fAuth = FirebaseAuth.instance;
+  final fStore = FirebaseFirestore.instance;
+  String uid = '';
+
+  User? fUser;
+  fetchUserData() {
+    fUser = fAuth.currentUser!;
+    uid = fUser!.uid;
+
+    fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
+      if (snapshot.exists) {
+        setState(() {
+          uid = snapshot.data()!['studentID'];
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    fetchUserData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,8 +78,14 @@ class _QrCodeState extends State<QrCode> {
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            QrCode.redeemVoucher = true;
+                            UserQrCode.redeemVoucher = true;
                           });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Redemption(),
+                            ),
+                          );
                         },
                         style: ButtonStyle(
                           backgroundColor:
@@ -71,7 +104,7 @@ class _QrCodeState extends State<QrCode> {
                           decoration: BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
-                                color: QrCode.redeemVoucher
+                                color: UserQrCode.redeemVoucher
                                     ? Color(0xFFF9CF00)
                                     : Colors.black,
                                 width: 3.0,
@@ -83,7 +116,7 @@ class _QrCodeState extends State<QrCode> {
                               textAlign: TextAlign.center,
                               "Redeem Voucher",
                               style: TextStyle(
-                                  color: QrCode.redeemVoucher
+                                  color: UserQrCode.redeemVoucher
                                       ? const Color(0xFFF9CF00)
                                       : Color.fromARGB(255, 255, 244, 188),
                                   fontWeight: FontWeight.bold,
@@ -97,12 +130,8 @@ class _QrCodeState extends State<QrCode> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ScanQR()));
                           setState(() {
-                            QrCode.redeemVoucher = false;
+                            UserQrCode.redeemVoucher = false;
                           });
                         },
                         style: ButtonStyle(
@@ -122,7 +151,7 @@ class _QrCodeState extends State<QrCode> {
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
-                            color: !QrCode.redeemVoucher
+                            color: !UserQrCode.redeemVoucher
                                 ? const Color(0xFFF9CF00)
                                 : Colors.black,
                             width: 3.0,
@@ -132,7 +161,7 @@ class _QrCodeState extends State<QrCode> {
                               textAlign: TextAlign.center,
                               "Earn Points",
                               style: TextStyle(
-                                  color: !QrCode.redeemVoucher
+                                  color: !UserQrCode.redeemVoucher
                                       ? const Color(0xFFF9CF00)
                                       : const Color.fromARGB(
                                           255, 255, 244, 188),
@@ -149,15 +178,28 @@ class _QrCodeState extends State<QrCode> {
                   height: MediaQuery.of(context).size.height * 0.15,
                 ),
                 Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: QrImage(
-                    data: "1234567890",
-                    version: QrVersions.auto,
-                    size: MediaQuery.of(context).size.width * 0.86,
-                  ),
-                ),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: UserQrCode.redeemVoucher == false
+                        ? QrImage(
+                            data: uid,
+                            version: QrVersions.auto,
+                            size: MediaQuery.of(context).size.width * 0.86,
+                          )
+                        : Center(
+                            child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.86,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: const Text(
+                                    "Earn Points Not Chosen. Click the above 'Earn Points to get QR Code'",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                )),
+                          )),
               ],
             ),
           ),
