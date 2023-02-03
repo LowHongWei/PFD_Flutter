@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/Cart.dart';
 import 'package:pfd_flutter/canteenPage.dart';
 import 'package:pfd_flutter/error404.dart';
 import 'package:pfd_flutter/indoFCVendor.dart';
@@ -21,7 +22,6 @@ class FoodClubVendors extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF9CF00),
       appBar: AppBar(
-        // automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFFF9CF00),
         elevation: 0,
         title: Image.asset(
@@ -41,6 +41,17 @@ class FoodClubVendors extends StatelessWidget {
               );
             },
             icon: Image.asset('images/qr-code black.png'),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Cart(),
+                ),
+              );
+            },
+            icon: Image.asset('images/cart.png'),
           ),
           IconButton(
             icon: Image.asset('images/user.png'),
