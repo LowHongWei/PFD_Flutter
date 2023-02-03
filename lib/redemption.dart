@@ -2,11 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/canteenPage.dart';
 import 'package:pfd_flutter/login.dart';
-import 'package:pfd_flutter/qrCode.dart';
 import 'package:pfd_flutter/register.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:pfd_flutter/userQrCode.dart';
 // import 'package:toast/toast.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -58,7 +59,7 @@ class _RedemptionState extends State<Redemption> {
           return Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const QrCode(),
+              builder: (context) => const UserQrCode(),
             ),
           );
         }
