@@ -75,6 +75,53 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
 
   @override
   Widget build(BuildContext context) {
+    // body: Center(
+    //     child: ListView(
+    //       children: [
+    //         Padding(
+    //           padding: EdgeInsets.symmetric(
+    //             vertical: MediaQuery.of(context).size.height * 0.04,
+    //             horizontal: MediaQuery.of(context).size.width * 0.08,
+    //           ),
+    //           child: SizedBox(
+    //             width: 340,
+    //             child: Text(
+    //               "Welcome, $name",
+    //               textAlign: TextAlign.start,
+    //               style: const TextStyle(
+    //                   fontSize: 20, fontWeight: FontWeight.bold),
+    //             ),
+    //           ),
+    //         ),
+    //         Expanded(
+    //           child: Container(
+    //             width: double.infinity,
+    //             height: MediaQuery.of(context).size.height * 0.79,
+    //             decoration: const BoxDecoration(
+    //               color: Colors.black,
+    //               borderRadius: BorderRadius.only(
+    //                 topLeft: Radius.circular(35),
+    //                 topRight: Radius.circular(35),
+    //               ),
+    //             ),
+    //             child: Column(
+    //               children: [
+    // Padding(
+    //   padding: EdgeInsets.symmetric(
+    //       horizontal: MediaQuery.of(context).size.width * 0.1,
+    //       vertical: MediaQuery.of(context).size.height * 0.02),
+    //   child: Align(
+    //     alignment: Alignment.topLeft,
+    //     child: Text(
+    //       '$points points', //Need to do backend
+    //       style: const TextStyle(
+    //           color: Color(0xFFF9CF00),
+    //           fontSize: 40,
+    //           fontWeight: FontWeight.bold),
+    //       textAlign: TextAlign.center,
+    //     ),
+    //   ),
+    // ),
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF9CF00),
@@ -119,34 +166,23 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.1,
-                  vertical: MediaQuery.of(context).size.height * 0.02),
+                vertical: MediaQuery.of(context).size.height * 0.04,
+                horizontal: MediaQuery.of(context).size.width * 0.08,
+              ),
               child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 1,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      children: [
-                        const Text(
-                          textAlign: TextAlign.start,
-                          "Welcome,",
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          textAlign: TextAlign.start,
-                          name, //Need to do backend
-                          style: const TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  )),
+                width: 340,
+                child: Text(
+                  "Welcome, $name",
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
             Expanded(
               child: Container(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.79,
+                height: MediaQuery.of(context).size.height * 1,
                 decoration: const BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.only(
@@ -163,12 +199,26 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          '$points points\ncredit:\t${NumberFormat.simpleCurrency(locale: 'en_SG', decimalDigits: 2).format(credit / 500)}', //Need to do backend
-                          //  NumberFormat.simpleCurrency(locale: 'en_SG', decimalDigits: 2).format(credit),
-                          // '$points points\n', //Need to do backend
+                          '$points points', //Need to do backend
                           style: const TextStyle(
                               color: Color(0xFFF9CF00),
-                              fontSize: 40,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1,
+                          vertical: MediaQuery.of(context).size.height * 0.02),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'credit: ${NumberFormat.simpleCurrency(locale: 'en_SG', decimalDigits: 2).format(credit / 500)}', //Need to do backend
+                          style: const TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontSize: 30,
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
@@ -310,6 +360,9 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                           ],
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.03,
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
