@@ -354,7 +354,7 @@ class _CartState extends State<Cart> {
                                         ],
                                       ),
                                       onPressed: () {
-                                        addList(list).then((value) {
+                                        addList(list).then((value) {// change the list to ur list
                                           Provider.of<FoodItemModel>(context,
                                                 listen: false)
                                             .clearCart();
