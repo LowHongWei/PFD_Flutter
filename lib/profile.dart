@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pfd_flutter/main_start.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -198,6 +199,22 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.all(16.0),
+                        textStyle: const TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () => fAuth.signOut().then((value) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MainStart(),
+                          ),
+                        );
+                      }),
+                      child: const Text('Sign Out'),
                     ),
                   ],
                 ),
