@@ -354,15 +354,18 @@ class _CartState extends State<Cart> {
                                         ],
                                       ),
                                       onPressed: () {
-                                        Provider.of<FoodItemModel>(context,
+                                        addList(list).then((value) {
+                                          Provider.of<FoodItemModel>(context,
                                                 listen: false)
                                             .clearCart();
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Payment(),
+                                            builder: (context) => const Payment(),
                                           ),
                                         );
+                                        });
+                                        
                                       },
                                     ),
                                   )
