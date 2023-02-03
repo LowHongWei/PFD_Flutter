@@ -49,6 +49,8 @@ dependencies:
   email_validator: ^2.1.17
   #notification
   # flutter_local_notifications: ^13.0.0
+  #toast
+  toast: ^0.2.9
 
   provider:
 

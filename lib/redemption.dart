@@ -4,9 +4,65 @@ import 'package:pfd_flutter/canteenPage.dart';
 import 'package:pfd_flutter/login.dart';
 import 'package:pfd_flutter/register.dart';
 import 'package:sizer/sizer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+import 'package:toast/toast.dart';
 
-class Redemption extends StatelessWidget {
+class Redemption extends StatefulWidget {
   const Redemption({super.key});
+
+  @override
+  State<Redemption> createState() => _RedemptionState();
+}
+
+class _RedemptionState extends State<Redemption> {
+  final FirebaseAuth fAuth = FirebaseAuth.instance;
+  final fStore = FirebaseFirestore.instance;
+  String name = '';
+  var points = 0;
+  int saved = 0;
+  String? uid;
+  User? fUser;
+
+  Future fetchUserData() async {
+    uid = fAuth.currentUser!.uid;
+
+    await fStore.collection('Users').doc(uid).get().then((snapshot) {
+      if (snapshot.exists) {
+        setState(() {
+          points = snapshot.data()!['points'];
+          saved = snapshot.data()!['saved'];
+        });
+      }
+    });
+  }
+
+  Future redeemVoucher(int amount) async {
+    uid = fAuth.currentUser!.uid;
+    DocumentReference doc = fStore.collection('Users').doc(uid);
+
+    await fStore.collection('Users').doc(uid).get().then((snapshot) {
+      if (snapshot.exists) {
+        points = snapshot.data()!['points'];
+        if (points < amount) {
+          int diff = amount - points;
+          return Toast.show("$diff more points to redeem voucher",
+              duration: Toast.lengthShort, gravity: Toast.bottom);
+        } else {
+          doc.update({'saved': FieldValue.increment(amount)});
+          doc.update({'points': points - amount});
+        }
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // fAuth.signOut();
+    fetchUserData();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +84,7 @@ class Redemption extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Column(
+        child: ListView(
           children: [
             const SizedBox(
               height: 20,
@@ -43,18 +99,18 @@ class Redemption extends StatelessWidget {
                 ),
               ],
             ),
-            const Text(
-              'Saved:',
-              style: TextStyle(color: Color(0xFFF9CF00), fontSize: 25),
+            Text(
+              'Saved: ${NumberFormat.simpleCurrency(locale: 'en_SG', decimalDigits: 2).format(saved / 500)}',
+              style: const TextStyle(color: Color(0xFFF9CF00), fontSize: 25),
             ),
             const SizedBox(height: 25),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: SizedBox(
                 width: 320,
                 child: Text(
-                  "Points",
-                  style: TextStyle(
+                  "$points Points",
+                  style: const TextStyle(
                       color: Color(0xFFF9CF00),
                       fontWeight: FontWeight.bold,
                       fontSize: 30),
@@ -78,12 +134,9 @@ class Redemption extends StatelessWidget {
                               backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Login(),
-                              ),
-                            );
+                            redeemVoucher(50).then((value) {
+                              fetchUserData();
+                            });
                           },
                           child: const Text(
                             'Redeem 10C',
@@ -105,12 +158,9 @@ class Redemption extends StatelessWidget {
                               backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Login(),
-                              ),
-                            );
+                            redeemVoucher(100).then((value) {
+                              fetchUserData();
+                            });
                           },
                           child: const Text(
                             'Redeem 20C',
@@ -134,12 +184,9 @@ class Redemption extends StatelessWidget {
                               backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Login(),
-                              ),
-                            );
+                            redeemVoucher(250).then((value) {
+                              fetchUserData();
+                            });
                           },
                           child: const Text(
                             'Redeem 50C',
@@ -161,12 +208,9 @@ class Redemption extends StatelessWidget {
                               backgroundColor: const Color(0xFFF9CF00),
                               shape: const StadiumBorder()),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Login(),
-                              ),
-                            );
+                            redeemVoucher(500).then((value) {
+                              fetchUserData();
+                            });
                           },
                           child: const Text(
                             'Redeem 100C',

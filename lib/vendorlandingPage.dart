@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pfd_flutter/advanceOrder.dart';
 import 'package:pfd_flutter/givePoints.dart';
 import 'package:pfd_flutter/landingPage.dart';
 import 'package:pfd_flutter/main_menu.dart';
@@ -24,8 +25,8 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
   final FirebaseAuth fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
   String name = '';
-  var points;
-  int? credit;
+  var points = 0;
+  int credit = 0;
   String? uid;
   User? fUser;
 
@@ -155,7 +156,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          '$points points\ncredit:\t${NumberFormat.simpleCurrency(locale: 'en_SG', decimalDigits: 2).format(credit! / 500)}', //Need to do backend
+                          '$points points\ncredit:\t${NumberFormat.simpleCurrency(locale: 'en_SG', decimalDigits: 2).format(credit / 500)}', //Need to do backend
                           //  NumberFormat.simpleCurrency(locale: 'en_SG', decimalDigits: 2).format(credit),
                           // '$points points\n', //Need to do backend
                           style: const TextStyle(
@@ -275,7 +276,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const CurrentOrder()),
+                                          const AdvanceOrder()),
                                 );
                               },
                               // ignore: prefer_const_constructors
@@ -292,6 +293,49 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                                               0.05),
                                   child: const Text(
                                     'Current orders',
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                            color: const Color(0xFFF9CF00),
+                            borderRadius: BorderRadius.circular(18)),
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const CurrentOrder()),
+                                );
+                              },
+                              // ignore: prefer_const_constructors
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(18),
+                                  topRight: Radius.circular(18),
+                                ),
+                                // ignore: prefer_const_constructors
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              0.05),
+                                  child: const Text(
+                                    'Advanced Orders',
                                     style: TextStyle(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold),
