@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pfd_flutter/food_item_model.dart';
 import 'package:pfd_flutter/profile.dart';
 import 'package:pfd_flutter/qrCode.dart';
+import 'package:pfd_flutter/register.dart';
 import 'package:provider/provider.dart';
 
 class Cart extends StatefulWidget {
@@ -94,7 +95,6 @@ class _CartState extends State<Cart> {
                       child: Column(
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.85,
                             child: DecoratedBox(
                               decoration: const BoxDecoration(
                                 border: Border(
@@ -129,7 +129,6 @@ class _CartState extends State<Cart> {
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.08,
-                            width: MediaQuery.of(context).size.width * 0.85,
                             child: DecoratedBox(
                               decoration: const BoxDecoration(
                                 color: Color(0xFF272D2F),
@@ -140,22 +139,22 @@ class _CartState extends State<Cart> {
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(4.0),
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.07),
+                                              0.02),
                                       child: const Text(
                                         "Qty",
                                         style: TextStyle(
                                             color: Color(0xFFF9CF00),
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 22),
+                                            fontSize: 15),
                                       ),
                                     ),
                                   ),
@@ -163,29 +162,46 @@ class _CartState extends State<Cart> {
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
                                             MediaQuery.of(context).size.width *
-                                                0.07),
+                                                0.1),
                                     child: const Text(
                                       "Item",
                                       style: TextStyle(
                                           color: Color(0xFFF9CF00),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 22),
+                                          fontSize: 15),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(4.0),
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.07),
+                                              0.04),
                                       child: const Text(
-                                        "Total",
+                                        "Price",
                                         style: TextStyle(
                                             color: Color(0xFFF9CF00),
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 22),
+                                            fontSize: 15),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.02),
+                                      child: const Text(
+                                        "Action",
+                                        style: TextStyle(
+                                            color: Color(0xFFF9CF00),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15),
                                       ),
                                     ),
                                   ),
@@ -195,19 +211,136 @@ class _CartState extends State<Cart> {
                           ),
                           Expanded(
                             child: SizedBox(
-                              height: 200,
                               child: ListView.builder(
                                 itemCount: value.cartItems.length,
                                 itemBuilder: (context, index) {
-                                  return ListTile(
-                                    title: Text(
-                                      value.cartItems[index][1],
+                                  return SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.08,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    child: DecoratedBox(
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFF272D2F),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.05),
+                                              child: Text(
+                                                "x${value.cartItems[index][0]}",
+                                                style: const TextStyle(
+                                                    color: Color(0xFFF9CF00),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15),
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            value.cartItems[index][1],
+                                            style: const TextStyle(
+                                                color: Color(0xFFF9CF00),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.07),
+                                              child: Text(
+                                                '\$${value.cartItems[index][2]}',
+                                                style: const TextStyle(
+                                                    color: Color(0xFFF9CF00),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15),
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(
+                                              Icons.delete,
+                                              color: Color(0xFFF9CF00),
+                                            ),
+                                            onPressed: () {
+                                              Provider.of<FoodItemModel>(
+                                                      context,
+                                                      listen: false)
+                                                  .removeItemFromCart(index);
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   );
                                 },
                               ),
                             ),
-                          )
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(36.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Color(0xFFF9CF00),
+                                  borderRadius: BorderRadius.circular(8)),
+                              padding: EdgeInsets.all(24),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Total Price",
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      Text("\$${value.calculateTotalPrice()}",
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20)),
+                                    ],
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.black),
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    padding: EdgeInsets.all(12),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 0.0,
+                                        backgroundColor:
+                                            Colors.red.withOpacity(0),
+                                      ),
+                                      child: Row(
+                                        children: const [
+                                          Text("Pay Now",
+                                              style: TextStyle(fontSize: 20)),
+                                          Icon(Icons.arrow_forward)
+                                        ],
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
