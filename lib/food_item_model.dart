@@ -53,4 +53,8 @@ class FoodItemModel extends ChangeNotifier {
     }
     return totalPrice.toStringAsFixed(2);
   }
+
+  void clearCart() {
+    _cartItems.clear();
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pfd_flutter/food_item_model.dart';
+import 'package:pfd_flutter/payment.dart';
 import 'package:pfd_flutter/profile.dart';
 import 'package:pfd_flutter/userQrCode.dart';
 import 'package:pfd_flutter/register.dart';
@@ -353,7 +354,15 @@ class _CartState extends State<Cart> {
                                         ],
                                       ),
                                       onPressed: () {
-                                        addList(list); // change list to ur list
+                                        Provider.of<FoodItemModel>(context,
+                                                listen: false)
+                                            .clearCart();
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Payment(),
+                                          ),
+                                        );
                                       },
                                     ),
                                   )
