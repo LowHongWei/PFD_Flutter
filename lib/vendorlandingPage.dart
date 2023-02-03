@@ -51,9 +51,16 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
 
     await fStore.collection('Users').doc(uid).get().then((snapshot) {
       if (snapshot.exists) {
-        points = snapshot.data()!['points'];
-        doc.update({'credit': FieldValue.increment(points)});
-        doc.update({'points': 0});
+        if (points < 5) {
+          int diff = 5 - points;
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('$diff points more to redeem'),
+          ));
+        } else {
+          points = snapshot.data()!['points'];
+          doc.update({'credit': FieldValue.increment(points)});
+          doc.update({'points': 0});
+        }
       }
     });
   }

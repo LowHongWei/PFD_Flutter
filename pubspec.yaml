@@ -51,6 +51,8 @@ dependencies:
   # flutter_local_notifications: ^13.0.0
   #toast
   toast: ^0.2.9
+  # flutter toast
+  fluttertoast: ^8.1.2
 
   provider:
 

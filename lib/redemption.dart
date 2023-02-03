@@ -2,11 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/canteenPage.dart';
 import 'package:pfd_flutter/login.dart';
+import 'package:pfd_flutter/qrCode.dart';
 import 'package:pfd_flutter/register.dart';
 import 'package:sizer/sizer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:toast/toast.dart';
+// import 'package:toast/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Redemption extends StatefulWidget {
   const Redemption({super.key});
@@ -23,6 +25,7 @@ class _RedemptionState extends State<Redemption> {
   int saved = 0;
   String? uid;
   User? fUser;
+  FToast? fToast;
 
   Future fetchUserData() async {
     uid = fAuth.currentUser!.uid;
@@ -46,11 +49,18 @@ class _RedemptionState extends State<Redemption> {
         points = snapshot.data()!['points'];
         if (points < amount) {
           int diff = amount - points;
-          return Toast.show("$diff more points to redeem voucher",
-              duration: Toast.lengthShort, gravity: Toast.bottom);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('$diff points more to redeem'),
+          ));
         } else {
           doc.update({'saved': FieldValue.increment(amount)});
           doc.update({'points': points - amount});
+          return Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const QrCode(),
+            ),
+          );
         }
       }
     });
@@ -58,8 +68,9 @@ class _RedemptionState extends State<Redemption> {
 
   @override
   void initState() {
-    // fAuth.signOut();
+    fToast = FToast();
     fetchUserData();
+    fToast!.init(context);
 
     super.initState();
   }
@@ -135,7 +146,7 @@ class _RedemptionState extends State<Redemption> {
                               shape: const StadiumBorder()),
                           onPressed: () {
                             redeemVoucher(50).then((value) {
-                              fetchUserData();
+                              // fetchUserData();
                             });
                           },
                           child: const Text(
@@ -159,7 +170,7 @@ class _RedemptionState extends State<Redemption> {
                               shape: const StadiumBorder()),
                           onPressed: () {
                             redeemVoucher(100).then((value) {
-                              fetchUserData();
+                              // fetchUserData();
                             });
                           },
                           child: const Text(
@@ -185,7 +196,7 @@ class _RedemptionState extends State<Redemption> {
                               shape: const StadiumBorder()),
                           onPressed: () {
                             redeemVoucher(250).then((value) {
-                              fetchUserData();
+                              // fetchUserData();
                             });
                           },
                           child: const Text(
@@ -209,7 +220,7 @@ class _RedemptionState extends State<Redemption> {
                               shape: const StadiumBorder()),
                           onPressed: () {
                             redeemVoucher(500).then((value) {
-                              fetchUserData();
+                              // fetchUserData();
                             });
                           },
                           child: const Text(
