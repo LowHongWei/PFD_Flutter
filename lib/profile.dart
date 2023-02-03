@@ -17,10 +17,9 @@ class _ProfilePageState extends State<ProfilePage> {
   String name = '';
   String? uid;
 
-  String gender = '';
-  String email = '';
   String dob = '';
-  String studentId = '';
+  String email = '';
+  String type = '';
 
   User? fUser;
   fetchUserData() {
@@ -32,9 +31,8 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() {
           name = snapshot.data()!['name'];
           email = snapshot.data()!['email'];
+          type = snapshot.data()!['type'];
           dob = snapshot.data()!['birthday'];
-          gender = snapshot.data()!['gender'];
-          studentId = snapshot.data()!['studentID'];
         });
       }
     });
@@ -145,38 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Student ID:",
-                          style: TextStyle(
-                              color: Color(0xFFF9CF00),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.1),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          studentId,
-                          style: const TextStyle(
-                              color: Color(0xFFF9CF00),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.04,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.1),
-                      child: const Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "Date of birth:",
+                          "BirthDay:",
                           style: TextStyle(
                               color: Color(0xFFF9CF00),
                               fontWeight: FontWeight.bold,
@@ -201,6 +168,37 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1),
+                      child: const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "user type:",
+                          style: TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          type,
+                          style: const TextStyle(
+                              color: Color(0xFFF9CF00),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
+                    ),
                     TextButton(
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -208,8 +206,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         textStyle: const TextStyle(fontSize: 20),
                       ),
                       onPressed: () => fAuth.signOut().then((value) {
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                              const MainMenu()), (Route<dynamic> route) => false);
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const MainMenu()),
+                            (Route<dynamic> route) => false);
                       }),
                       child: const Text('Sign Out'),
                     ),
