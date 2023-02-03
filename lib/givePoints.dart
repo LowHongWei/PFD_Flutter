@@ -5,21 +5,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pfd_flutter/scanQrCode.dart';
 
 class GivePoints extends StatefulWidget {
-  const GivePoints({super.key});
+  final String sID;
+  const GivePoints({super.key, required this.sID});
 
   @override
   State<GivePoints> createState() => _GivePointsState();
 }
 
 class _GivePointsState extends State<GivePoints> {
+  late int points;
   int cupQty = 0;
   int containerQty = 0;
 
   final FirebaseAuth fAuth = FirebaseAuth.instance;
   final fStore = FirebaseFirestore.instance;
-  int? points;
-  String? uid;
-  User? fUser;
+  String uid = '';
+  User? fUser; //S10203927
 
   Future updatePoints(String studentUid, int addPoints) async {
     DocumentReference doc = fStore.collection('Users').doc(studentUid);
@@ -341,7 +342,8 @@ class _GivePointsState extends State<GivePoints> {
                       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18)))),
                   onPressed: () {
-                    updatePoints('z5Gb53iruXOYERr7UPN1dEZ2O433', 100) //put dynamic values
+                    updatePoints(widget.sID,
+                            containerQty * 15 + cupQty * 5) //put dynamic values
                         .then((value) => Navigator.pop(context));
                   },
                   child: const Text(

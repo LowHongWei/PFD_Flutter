@@ -92,7 +92,7 @@ class _Login extends State<Login> {
                           'Sign In',
                           style: TextStyle(
                               color: Color(0xFFF9CF00),
-                              fontSize: 30,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.right,
                         ),
@@ -123,7 +123,7 @@ class _Login extends State<Login> {
                       ),
                     ),
                     const SizedBox(
-                      height: 35,
+                      height: 25,
                     ),
                     SizedBox(
                       width: 320,
@@ -149,11 +149,11 @@ class _Login extends State<Login> {
                       ),
                     ),
                     const SizedBox(
-                      height: 45,
+                      height: 35,
                     ),
                     SizedBox(
                       width: 300,
-                      height: 40,
+                      height: 30,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFFF9CF00),
@@ -161,7 +161,6 @@ class _Login extends State<Login> {
                           onPressed: () {
                             //
                             signIn().then((value) {
-                              
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -191,7 +190,7 @@ class _Login extends State<Login> {
                     ),
                     SizedBox(
                       width: 300,
-                      height: 40,
+                      height: 30,
                       child: OutlinedButton(
                           style: ElevatedButton.styleFrom(
                               side: const BorderSide(

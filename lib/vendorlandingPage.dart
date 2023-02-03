@@ -76,53 +76,6 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    // body: Center(
-    //     child: ListView(
-    //       children: [
-    //         Padding(
-    //           padding: EdgeInsets.symmetric(
-    //             vertical: MediaQuery.of(context).size.height * 0.04,
-    //             horizontal: MediaQuery.of(context).size.width * 0.08,
-    //           ),
-    //           child: SizedBox(
-    //             width: 340,
-    //             child: Text(
-    //               "Welcome, $name",
-    //               textAlign: TextAlign.start,
-    //               style: const TextStyle(
-    //                   fontSize: 20, fontWeight: FontWeight.bold),
-    //             ),
-    //           ),
-    //         ),
-    //         Expanded(
-    //           child: Container(
-    //             width: double.infinity,
-    //             height: MediaQuery.of(context).size.height * 0.79,
-    //             decoration: const BoxDecoration(
-    //               color: Colors.black,
-    //               borderRadius: BorderRadius.only(
-    //                 topLeft: Radius.circular(35),
-    //                 topRight: Radius.circular(35),
-    //               ),
-    //             ),
-    //             child: Column(
-    //               children: [
-    // Padding(
-    //   padding: EdgeInsets.symmetric(
-    //       horizontal: MediaQuery.of(context).size.width * 0.1,
-    //       vertical: MediaQuery.of(context).size.height * 0.02),
-    //   child: Align(
-    //     alignment: Alignment.topLeft,
-    //     child: Text(
-    //       '$points points', //Need to do backend
-    //       style: const TextStyle(
-    //           color: Color(0xFFF9CF00),
-    //           fontSize: 40,
-    //           fontWeight: FontWeight.bold),
-    //       textAlign: TextAlign.center,
-    //     ),
-    //   ),
-    // ),
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF9CF00),
@@ -137,17 +90,6 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
           width: MediaQuery.of(context).size.width * 0.6,
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const UserQrCode(),
-                ),
-              );
-            },
-            icon: Image.asset('images/qr-code black.png'),
-          ),
           IconButton(
             icon: Image.asset('images/user.png'),
             iconSize: 50,
@@ -183,7 +125,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
             Expanded(
               child: Container(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * 1,
+                height: MediaQuery.of(context).size.height * 2,
                 decoration: const BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.only(
@@ -230,7 +172,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.15,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             color: const Color(0xFFF9CF00),
@@ -274,7 +216,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.15,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             color: const Color(0xFFF9CF00),
@@ -321,7 +263,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.15,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             color: const Color(0xFFF9CF00),
@@ -333,8 +275,8 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Test()),
-                                  //AdvanceOrder
+                                      builder: (context) =>
+                                          const CurrentOrder()),
                                 );
                               },
                               // ignore: prefer_const_constructors
@@ -367,7 +309,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.15,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             color: const Color(0xFFF9CF00),
@@ -380,7 +322,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const CurrentOrder()),
+                                          const AdvanceOrder()),
                                 );
                               },
                               // ignore: prefer_const_constructors

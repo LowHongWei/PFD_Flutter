@@ -26,7 +26,7 @@ class _UserQrCodeState extends State<UserQrCode> {
     fStore.collection('Users').doc(fUser!.uid).get().then((snapshot) {
       if (snapshot.exists) {
         setState(() {
-          uid = snapshot.data()!['studentID'];
+          uid = snapshot.data()!['uid'];
         });
       }
     });

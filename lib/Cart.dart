@@ -357,7 +357,7 @@ class _CartState extends State<Cart> {
                                       child: Row(
                                         children: const [
                                           Text("Pay Now",
-                                              style: TextStyle(fontSize: 20)),
+                                              style: TextStyle(fontSize: 14)),
                                           Icon(Icons.arrow_forward)
                                         ],
                                       ),

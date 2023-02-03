@@ -11,7 +11,6 @@ class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: const Color(0xFFF9CF00),
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -24,15 +23,15 @@ class MainMenu extends StatelessWidget {
           width: 200,
         ),
       ),
-       body:Center(
+      body: Center(
         child: Column(
           children: [
             const SizedBox(
               height: 60,
             ),
-            const Image(
+            Image(
               image: AssetImage('images/burger.png'),
-              width: 300,
+              width: MediaQuery.of(context).size.height * 0.3,
             ),
             const SizedBox(height: 25),
             const Padding(
@@ -58,7 +57,7 @@ class MainMenu extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 40,
+              height: 10,
             ),
             SizedBox(
               width: 300,

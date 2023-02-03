@@ -283,7 +283,7 @@ class FoodClubVendors extends StatelessWidget {
                               child: const Text(
                                 'Shanghainese',
                                 style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
+                                    fontSize: 15, fontWeight: FontWeight.bold),
                               ),
                             )
                           ],

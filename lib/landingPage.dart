@@ -155,7 +155,7 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.15,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             color: const Color(0xFFF9CF00),
@@ -201,7 +201,7 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.15,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             color: const Color(0xFFF9CF00),
