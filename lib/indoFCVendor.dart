@@ -9,7 +9,7 @@ import 'package:pfd_flutter/food_item_tile.dart';
 import 'package:pfd_flutter/main_menu.dart';
 import 'package:pfd_flutter/main_start.dart';
 import 'package:pfd_flutter/profile.dart';
-import 'package:pfd_flutter/qrCode.dart';
+import 'package:pfd_flutter/userQrCode.dart';
 import 'package:pfd_flutter/redemption.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +39,7 @@ class FCIndoVendor extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const QrCode(),
+                  builder: (context) => const UserQrCode(),
                 ),
               );
             },

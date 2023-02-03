@@ -5,7 +5,7 @@ import 'package:pfd_flutter/currentOrder.dart';
 import 'package:pfd_flutter/foodClubVendors.dart';
 import 'package:pfd_flutter/givePoints.dart';
 import 'package:pfd_flutter/profile.dart';
-import 'package:pfd_flutter/qrCode.dart';
+import 'package:pfd_flutter/userQrCode.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pfd_flutter/redemption.dart';
@@ -72,7 +72,7 @@ class _LandingPageState extends State<LandingPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const QrCode(),
+                  builder: (context) => const UserQrCode(),
                 ),
               );
             },

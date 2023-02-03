@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pfd_flutter/main_menu.dart';
 import 'package:pfd_flutter/main_start.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -207,12 +208,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         textStyle: const TextStyle(fontSize: 20),
                       ),
                       onPressed: () => fAuth.signOut().then((value) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MainStart(),
-                          ),
-                        );
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                              const MainMenu()), (Route<dynamic> route) => false);
                       }),
                       child: const Text('Sign Out'),
                     ),

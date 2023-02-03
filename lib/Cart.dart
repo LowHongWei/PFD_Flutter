@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pfd_flutter/food_item_model.dart';
 import 'package:pfd_flutter/profile.dart';
-import 'package:pfd_flutter/qrCode.dart';
+import 'package:pfd_flutter/userQrCode.dart';
 import 'package:pfd_flutter/register.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +39,7 @@ class _CartState extends State<Cart> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const QrCode(),
+                    builder: (context) => const UserQrCode(),
                   ),
                 );
               },

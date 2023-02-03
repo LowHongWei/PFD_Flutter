@@ -6,9 +6,9 @@ import 'package:pfd_flutter/landingPage.dart';
 import 'package:pfd_flutter/main_menu.dart';
 import 'package:pfd_flutter/main_start.dart';
 import 'package:pfd_flutter/profile.dart';
-import 'package:pfd_flutter/qrCode.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pfd_flutter/userQrCode.dart';
 import 'currentOrder.dart';
 import 'scanQrCode.dart';
 import 'package:pfd_flutter/canteenPage.dart';
@@ -87,7 +87,7 @@ class _VendorLandingPageState extends State<VendorLandingPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const QrCode(),
+                  builder: (context) => const UserQrCode(),
                 ),
               );
             },
