@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfd_flutter/canteenPage.dart';
 import 'package:pfd_flutter/login.dart';
+import 'package:pfd_flutter/redeemQR.dart';
 import 'package:pfd_flutter/register.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sizer/sizer.dart';
@@ -56,10 +57,12 @@ class _RedemptionState extends State<Redemption> {
         } else {
           doc.update({'saved': FieldValue.increment(amount)});
           doc.update({'points': points - amount});
-          return Navigator.push(
+          Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const UserQrCode(),
+              builder: (context) => RedeemQR(
+                points: amount,
+              ),
             ),
           );
         }
